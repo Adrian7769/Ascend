@@ -1,0 +1,5 @@
+Goals: Automate Google Email Interaction in order to view view real time data
+
+Features: Graphical UI,
+
+Requirements: 
