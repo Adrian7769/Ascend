@@ -1,3 +1,4 @@
+// Contains Google Authentication Code
 #include <iostream>
 #include <string>
 #include <ctime>
@@ -8,7 +9,6 @@
 #include "GmailAuth.h"
 #include "Logger.h"
 
-using namespace std;
 using json = nlohmann::json;
 
 extern Logger logger;
@@ -22,12 +22,13 @@ GmailAuth::GmailAuth (const string clientSecret) {
     tokenCacheFile = "env/token_cache.json";
     redirectUrl = "https://localhost:8000";
     tokenExpiry = 0;
+    logger.log(LOG_INFO, "GmailAuth Initialized.");
 }
 const string GmailAuth::getAccessToken() {
     return accessToken;
 }
 const bool GmailAuth::isAuthenticated() {
-    return !accessToken.empty() && !isTokenExpired(); // Make sure access token is not expired and exists
+    return !accessToken.empty() && !isTokenExpired(); // Make sure access token is not expired and exists!!
 }
 const bool GmailAuth::isTokenExpired() {
     time_t now = time(nullptr);

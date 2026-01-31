@@ -1,5 +1,5 @@
-#ifndef GMAIL_AUTH
-#define GMAIL_AUTH
+#ifndef GMAIL_AUTH_H
+#define GMAIL_AUTH_H
 #include <string>
 
 class GmailAuth {
