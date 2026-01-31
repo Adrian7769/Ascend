@@ -1,4 +1,6 @@
 /.vscode
-client_secret.json
-token_cache.json
+/env
 main.exe
+/libs
+/logs
+libcurl-x64.dll

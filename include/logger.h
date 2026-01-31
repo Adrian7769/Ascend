@@ -5,7 +5,7 @@
 #include <ctime>
 #include <string>
 using namespace std;
-enum LogLevel {DEBUG, INFO, WARNING, ERROR};
+enum LogLevel {LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR};
 class Logger {
     public:
         Logger(const string filename, LogLevel level);
