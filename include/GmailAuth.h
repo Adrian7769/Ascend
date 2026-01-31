@@ -10,6 +10,10 @@ Google Authentication Flow (As far as i understand it).
 4.) You also need methods to read the token file and write to the token file. The token also expires every hour, so you need a method to be able to handle refreshes. 
 5.) for refreshes You can just send google the token, and they will give you another updated one. every time the client makes a get request, it checks the status of the token. So basically we never have to get another code.
  To summarize Client Secret -> User Code -> Token -> Refresh Token (This last step ideally runs forever)
+ main references for this whole process:
+  https://developers.google.com/identity/protocols/oauth2
+  https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient
+  https://developers.google.com/oauthplayground/
 */
 class GmailAuth {
     public:
