@@ -38,7 +38,7 @@ int main() {
                 if (processedIds.count(msg.id) > 0) {
                     continue;
                 }
-                logger.log(LOG_INFO, "  Processing message from: " + msg.from);
+                logger.log(LOG_INFO, "Processing message from: " + msg.from);
                 
                 // TODO: Extract hex and parse
                 // std::string hex = BalloonDataParser::extractHex(msg.bodyText);
