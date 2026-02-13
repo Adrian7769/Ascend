@@ -24,7 +24,6 @@ GmailClient::~GmailClient() {
     logger.log(LOG_INFO,"GmailClient Cleaning up");
     curl_global_cleanup();
 }
-// Make GET request to Gmail API
 std::string GmailClient::makeGetRequest(const std::string& endpoint) {
     // But first check the status of token
     if (auth_->isTokenExpired()) {
@@ -34,23 +33,29 @@ std::string GmailClient::makeGetRequest(const std::string& endpoint) {
             return "";
         }
     }
+    // Initialize Curl object
     CURL * curl = curl_easy_init();
     if (!curl) {
         logger.log(LOG_ERROR, "Failed to initialize CURL");
         return "";
     }
+    // Store Response
     std::string response;
+    // When making get request append the endpoint to the base url to hit correct api endpoint
     std::string url = baseUrl_ + endpoint;
     std::string authHeader = "Authorization: Bearer " + auth_->getAccessToken();
+
     struct curl_slist* headers = nullptr;
     headers = curl_slist_append(headers, authHeader.c_str());
     headers = curl_slist_append(headers, "Content-Type: application/json");
+    // Configure For get Request
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+    // Store Response code
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
         logger.log(LOG_ERROR, "[ERROR] CURL request failed: " + std::string(curl_easy_strerror(res)));
@@ -58,9 +63,10 @@ std::string GmailClient::makeGetRequest(const std::string& endpoint) {
         curl_easy_cleanup(curl);
         return "";
     }
+    // Store Http code
     long httpCode = 0;
     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpCode);
-    if (httpCode != 200) {
+    if (httpCode != 200) { // 200 indicates success
         logger.log(LOG_ERROR, "HTTP error " + std::to_string(httpCode));
         logger.log(LOG_ERROR,"   Response: " + response);
     }
@@ -68,105 +74,52 @@ std::string GmailClient::makeGetRequest(const std::string& endpoint) {
     curl_easy_cleanup(curl);
     return response;
 }
-std::vector<std::string> GmailClient::searchMessages(const std::string& query, int maxResults) {
+
+// Called from top level of main loop
+std::vector<GmailMessage> GmailClient::getMessageAfter(time_t afterTime, const std::string& senderEmail) {
+    std::string query = "after:" + std::to_string(afterTime) + " from:" + senderEmail;
     logger.log(LOG_INFO,"GmailClient Searching for: \"" + query + "\"");
+
     CURL* curl = curl_easy_init();
     char* encodedQuery = curl_easy_escape(curl, query.c_str(), query.length());
     std::stringstream endpoint;
-    endpoint << "/messages?q=" << encodedQuery << "&maxResults=" << maxResults;
+    endpoint << "/messages?q=" << encodedQuery;
     curl_free(encodedQuery);
     curl_easy_cleanup(curl);
+    // Response stores message ID
     std::string response = makeGetRequest(endpoint.str());
+    //logger.log(LOG_INFO,"initial Response: " + response);
+    
     if (response.empty()) {
         logger.log(LOG_ERROR, "Empty response from search");
         return {};
     }
-    return parseMessageList(response);
-}
-std::vector<std::string> GmailClient::parseMessageList(const std::string& jsonResponse) {
-    std::vector<std::string> messageIds;
-    try {
-        json j = json::parse(jsonResponse);
-        if (j.contains("messages")) {
-            for (const auto& msg : j["messages"]) {
-                if (msg.contains("id")) {
-                    messageIds.push_back(msg["id"].get<std::string>());
-                }
-            }
-            logger.log(LOG_INFO, "GmailClient Found " + std::to_string(messageIds.size()) + " messages");
-        } else {
-            logger.log(LOG_INFO, "GmailClient No messages found");
+    
+    nlohmann::json json = nlohmann::json::parse(response);
+    std::vector<GmailMessage> messages;
+    // Use ID's to make api request to get body text
+    if (json.contains("messages")) {
+        for (const auto& msgRef : json["messages"]) {
+            std::string msgId = msgRef["id"];
+            GmailMessage fullMsg = getMessageById(msgId);
+            messages.push_back(fullMsg);
         }
-    } catch (const json::exception& e) {
-        logger.log(LOG_ERROR, "JSON parse error: " + std::string(e.what()));
     }
-    return messageIds;
+    return messages;
 }
-GmailMessage GmailClient::getMessage(const std::string& messageId) {
-    logger.log(LOG_INFO, "GmailClient Fetching message: " + messageId.substr(0, 10) + "...");
+
+// Make API calls BY ID
+GmailMessage GmailClient::getMessageById(const std::string& messageId) {
     std::string endpoint = "/messages/" + messageId + "?format=full";
     std::string response = makeGetRequest(endpoint);
+    //logger.log(LOG_INFO, "Full Response By ID (" + messageId + "): "  + response);
     if (response.empty()) {
-        logger.log(LOG_ERROR, "Failed to fetch message");
-        return GmailMessage();
+        logger.log(LOG_ERROR, "Empty response for message ID: " + messageId);
     }
-    return parseMessage(response);
+    return parseResponse(response);
 }
-std::string GmailClient::decodeBase64Url(const std::string& encoded) {
-    std::string base64 = encoded;
-    replace(base64.begin(), base64.end(), '-', '+');
-    replace(base64.begin(), base64.end(), '_', '/');
-    while (base64.length() % 4 != 0) {
-        base64 += '=';
-    }
-    static const std::string base64_chars = 
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz"
-        "0123456789+/";
-    std::string decoded;
-    std::vector<int> T(256, -1);
-    for (int i = 0; i < 64; i++) T[base64_chars[i]] = i;
-    int val = 0, valb = -8;
-    for (unsigned char c : base64) {
-        if (T[c] == -1) break;
-        val = (val << 6) + T[c];
-        valb += 6;
-        if (valb >= 0) {
-            decoded.push_back(char((val >> valb) & 0xFF));
-            valb -= 8;
-        }
-    }
-    return decoded;
-}
-std::string GmailClient::extractBodyFromParts(const std::string& partsJson, const std::string& mimeType) {
-    try {
-        json payload = json::parse(partsJson);
-        if (payload.contains("mimeType") && 
-            payload["mimeType"].get<std::string>() == mimeType &&
-            payload.contains("body") && 
-            payload["body"].contains("data")) {
-            return decodeBase64Url(payload["body"]["data"].get<std::string>());
-        }
-        if (payload.contains("parts")) {
-            for (const auto& part : payload["parts"]) {
-                if (part.contains("mimeType") && 
-                    part["mimeType"].get<std::string>() == mimeType &&
-                    part.contains("body") && 
-                    part["body"].contains("data")) {
-                    return decodeBase64Url(part["body"]["data"].get<std::string>());
-                }
-                if (part.contains("parts")) {
-                    std::string result = extractBodyFromParts(part.dump(), mimeType);
-                    if (!result.empty()) return result;
-                }
-            }
-        }
-    } catch (const json::exception& e) {
-        logger.log(LOG_ERROR,"extracting body: " + std::string(e.what()));
-    }
-    return "";
-}
-GmailMessage GmailClient::parseMessage(const std::string& jsonResponse) {
+// Parse Response and map to struct GmailMessage
+GmailMessage GmailClient::parseResponse(const std::string& jsonResponse) {
     GmailMessage message;
     try {
         json j = json::parse(jsonResponse);
@@ -202,40 +155,91 @@ GmailMessage GmailClient::parseMessage(const std::string& jsonResponse) {
     }
     return message;
 }
-std::vector<GmailMessage> GmailClient::getMessages(const std::vector<std::string>& messageIds) {
-    std::vector<GmailMessage> messages;
-    for (const auto& id : messageIds) {
-        messages.push_back(getMessage(id));
+// Sample Base 64 encoded email content
+std::string GmailClient::extractBodyFromParts(const std::string& partsJson, const std::string& mimeType) {
+    try {
+        json payload = json::parse(partsJson);
+        if (payload.contains("mimeType") && 
+            payload["mimeType"].get<std::string>() == mimeType &&
+            payload.contains("body") && 
+            payload["body"].contains("data")) {
+            return decodeBase64Url(payload["body"]["data"].get<std::string>());
+        }
+        if (payload.contains("parts")) {
+            for (const auto& part : payload["parts"]) {
+                if (part.contains("mimeType") && 
+                    part["mimeType"].get<std::string>() == mimeType &&
+                    part.contains("body") && 
+                    part["body"].contains("data")) {
+                    return decodeBase64Url(part["body"]["data"].get<std::string>());
+                }
+                if (part.contains("parts")) {
+                    std::string result = extractBodyFromParts(part.dump(), mimeType);
+                    if (!result.empty()) return result;
+                }
+            }
+        }
+    } catch (const json::exception& e) {
+        logger.log(LOG_ERROR,"extracting body: " + std::string(e.what()));
     }
-    return messages;
+    return "";
 }
-std::vector<GmailMessage> GmailClient::searchAndGetMessages(const std::string& query, int maxResults) {
-    auto ids = searchMessages(query, maxResults);
-    return getMessages(ids);
-}
-std::vector<GmailMessage> GmailClient::getMessagesFrom(const std::string& senderEmail, int maxResults) {
-    std::string query = "from:" + senderEmail;
-    return searchAndGetMessages(query, maxResults);
-}
-std::vector<GmailMessage> GmailClient::getMessagesBySubject(const std::string& subject, int maxResults) {
-    std::string query = "subject:" + subject;
-    return searchAndGetMessages(query, maxResults);
-}
-std::vector<GmailMessage> GmailClient::getMessagesAfter(time_t afterTime, const std::string& senderEmail) {
-    // Gmail uses "after:YYYY/MM/DD" format
-    char dateStr[32];
-    struct tm* tm_info = localtime(&afterTime);
-    strftime(dateStr, sizeof(dateStr), "%Y/%m/%d", tm_info);
-    std::stringstream query;
-    query << "after:" << dateStr;
-    if (!senderEmail.empty()) {
-        query << " from:" << senderEmail;
+// Sample Base 64 encoded email content
+/* 
+              "data": "LS0tLS0tLS0tLSBGb3J3YXJkZWQg
+              bWVzc2FnZSAtLS0tLS0tLS0NCkZyb206IERhbmllbCBCYWRpdSA8ZGFuMjM
+              1MjY0OEBtYXJpY29wYS5lZHU-DQpEYXRlOiBUaHUsIEphbiAyOSwgMjAyNiBhdCA2OjQ
+              w4oCvUE0NClN1YmplY3Q6IEZ3ZDogTWVzc2FnZSA1NSBmcm9tIFJvY2tCTE9DSyAzMDA1MzQ
+              wNjUzOTAxMjANClRvOiA8QURSMjIxMTcwMEBtYXJpY29wYS5lZHU-DQoNCg0KDQoNCi0tLS0
+              tLS0tLS0gRm9yd2FyZGVkIG1lc3NhZ2UgLS0tLS0tLS0tDQpGcm9tOiAzMDA1MzQwNjUzO
+              TAxMjAgPDMwMDUzNDA2NTM5MDEyMEByb2NrYmxvY2sucm9jazcuY29tPg0KRGF0ZTogU2F0LC
+              BNYXIgMjksIDIwMjUgYXQgMTI6NTHigK9QTQ0KU3ViamVjdDogTWVzc2FnZSA1NSBmcm9tIF
+              JvY2tCTE9DSyAzMDA1MzQwNjUzOTAxMjANClRvOiA8ZGFuMjM1MjY0OEBtYXJpY29wYS5lZHU
+              -DQoNCg0KDQpJTUVJOiAzMDA1MzQwNjUzOTAxMjANCk1PTVNOOiA1NQ0KVHJhbnNtaXQgVGltZ
+              TogMjAyNS0wMy0yOVQxOTo1MDoxMlogVVRDDQpJcmlkaXVtIExhdGl0dWRlOiAzMi43ODgwDQpJc
+              mlkaXVtIExvbmdpdHVkZTogLTExMS4zNDEyDQpJcmlkaXVtIENFUDogMy4wDQpJcmlkaXVtIFNlc3Np
+              b24gU3RhdHVzOiAwDQpEYXRhOg0KNTI0MjAwMzNmNTEzMzIwNzIwMmYyZTAwNmYxNjMzMDEwMDAwMDIyNzA
+              wMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMA0K"
+Decoded to:
+
+From: 300534065390120 <300534065390120@rockblock.rock7.com>
+Date: Sat, Mar 29, 2025 at 12:51 PM
+Subject: Message 55 from RockBLOCK 300534065390120
+To: <dan2352648@maricopa.edu>
+
+IMEI: 300534065390120
+MOMSN: 55
+Transmit Time: 2025-03-29T19:50:12Z UTC
+Iridium Latitude: 32.7880
+Iridium Longitude: -111.3412
+Iridium CEP: 3.0
+Iridium Session Status: 0
+Data: 524200333f5133207202f2e006f1633010000022700000000000000000000000000000000000000000000000000000
+*/
+std::string GmailClient::decodeBase64Url(const std::string& encoded) {
+    std::string base64 = encoded;
+    replace(base64.begin(), base64.end(), '-', '+');
+    replace(base64.begin(), base64.end(), '_', '/');
+    while (base64.length() % 4 != 0) {
+        base64 += '=';
     }
-    return searchAndGetMessages(query.str(), 50);
+    static const std::string base64_chars = 
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789+/";
+    std::string decoded;
+    std::vector<int> T(256, -1);
+    for (int i = 0; i < 64; i++) T[base64_chars[i]] = i;
+    int val = 0, valb = -8;
+    for (unsigned char c : base64) {
+        if (T[c] == -1) break;
+        val = (val << 6) + T[c];
+        valb += 6;
+        if (valb >= 0) {
+            decoded.push_back(char((val >> valb) & 0xFF));
+            valb -= 8;
+        }
+    }
+    return decoded;
 }
-std::vector<GmailMessage> GmailClient::getLatestMessagesFrom(
-    const std::string& senderEmail, 
-    int count
-) {
-    return getMessagesFrom(senderEmail, count);
-}
+

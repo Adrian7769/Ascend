@@ -87,6 +87,7 @@ public class Decoder {
         // Process Altitude (indices 16 to 19)
         int altitude = (decimalValues[16] << 24) | (decimalValues[17] << 16) | (decimalValues[18] << 8) | decimalValues[19];
         System.out.println("Altitude: " + altitude + (decimalValues[20] == 0 ? " meters" : " feet"));
+
         /* -------------- OLD CODE --------------
         // Process Analog Data (indices 21 to 36)
         System.out.println("Analog Data:");
