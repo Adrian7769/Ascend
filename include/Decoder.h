@@ -35,7 +35,7 @@ private:
     // Sensor-specific decoders (use calibration from PayloadConfig)
     AnalogSensorData decodeInternalTemp(uint16_t rawValue);
     AnalogSensorData decodePressure(uint16_t rawValue);
-    AnalogSensorData decodeUVLight(uint16_t rawValue);
+    //AnalogSensorData decodeUVLight(uint16_t rawValue);
     AnalogSensorData decodeExternalTemp(uint16_t rawValue);
     AnalogSensorData decodeAccelY(uint16_t rawValue);
     AnalogSensorData decodeAccelX(uint16_t rawValue);

@@ -10,6 +10,7 @@ const std::string PATH_TO_SECRET = "env/client_secret.json";
 const std::string PATH_TO_TOKEN = "env/token_cache.json"; //If these two file locations aren't correct, will log an error. Make sure they are correct.
 // Specify your data
 struct PayloadConfig {
+
     // Header (ASCII characters)
     static const int HEADER_BYTE_0 = 0;  // Should be 'R' (0x52)
     static const int HEADER_BYTE_1 = 1;  // Should be 'B' (0x42)
@@ -17,6 +18,9 @@ struct PayloadConfig {
     static const int SERIAL_BYTE_0 = 2;  // MSB
     static const int SERIAL_BYTE_1 = 3;
     static const int SERIAL_BYTE_2 = 4;  //LSB
+
+    // *************************************** TEAM 2 GNSS (DATA) *************************************** //
+
     // UTC Time (3 bytes)
     static const int UTC_HOURS = 5;
     static const int UTC_MINUTES = 6;
@@ -37,54 +41,63 @@ struct PayloadConfig {
     static const int ALTITUDE_BYTE_2 = 18;
     static const int ALTITUDE_BYTE_3 = 19;  // LSB
     static const int ALTITUDE_UNITS = 20;   // 0=meters, 1=feet
+
+    // *************************************** TEAM 1 ANALOG (DATA) *************************************** //
+
     // Analog Sensor Data (8 ports, 2 bytes each, MSB first)
-    // Each port is at: BASE + (port_number * 2)
-    static const int ANALOG_DATA_BASE = 21;
-    static const int ANALOG_PORT_COUNT = 8;
-    static const int BYTES_PER_PORT = 2;
-    // Individual analog port indices (for convenience)
-    static const int PORT_INTERNAL_TEMP = 0;
-    static const int PORT_PRESSURE = 1;
-    static const int PORT_UV_LIGHT = 2;
-    static const int PORT_UNUSED = 3;
-    static const int PORT_EXTERNAL_TEMP = 4;
-    static const int PORT_ACCEL_Y = 5;
-    static const int PORT_ACCEL_X = 6;
+    // Each port is in the byte array at: BASE + (port_number * 2)
+    static const int ANALOG_DATA_BASE = 21; // At what index does you analog data start
+    static const int BYTES_PER_PORT = 2; // Bytes per port
+
+    // ANALOG PORTS TEAM 1
+    static const int PORT_INTERNAL_TEMP = 4;
+    static const int PORT_PRESSURE = 2;
+    static const int PORT_EXTERNAL_TEMP = 3;
+    static const int PORT_ACCEL_Y = 6;
+    static const int PORT_ACCEL_X = 5;
     static const int PORT_BATTERY = 7;
+
+    // *************************************** RESERVED (DATA) *************************************** //
+
     // Reserved bytes
     static const int RESERVED_START = 37;
     static const int RESERVED_END = 47;
+
     // Iridium Modem Status (2 bytes)
     static const int MODEM_STATUS_MSB = 48;
     static const int MODEM_STATUS_LSB = 49;
+
     // Total expected payload size
     static const int EXPECTED_PAYLOAD_SIZE = 50;  // 50 bytes = 100 hex chars
+    // Constant used to validate HEX SIZE
+
+    // Store your Sensor Calibrations HERE!!!!!
     struct SensorCalibration {
+
         // Analog-to-voltage conversion
         static constexpr float ADC_TO_VOLTAGE = 0.004888f;  // (5V / 1024)
+
+        // These were our test equations numbers
         // Internal Temperature (Port 0)
-        static constexpr float INTERNAL_TEMP_OFFSET = 0.489f;
-        static constexpr float INTERNAL_TEMP_SCALE = 0.0096f;
+        static constexpr float INTERNAL_TEMP_OFFSET = 0.502f;
+        static constexpr float INTERNAL_TEMP_SCALE = 0.011f;
         // Pressure (Port 1)
-        static constexpr float PRESSURE_OFFSET = 0.580f;
+        static constexpr float PRESSURE_OFFSET = 1.04f;
         static constexpr float PRESSURE_SCALE = 0.267f;
-        // UV Light (Port 2)
-        static constexpr float UV_SCALE = 0.1f;
+        // Battery (Port 7)
+        static constexpr float BATTERY_IDEAL_OFFSET = 0.971f;
         // External Temperature (Port 4)
-        static constexpr float EXTERNAL_TEMP_OFFSET = 0.495f;
-        static constexpr float EXTERNAL_TEMP_SCALE = 0.0095f;
+        static constexpr float EXTERNAL_TEMP_OFFSET = 0.491f;
+        static constexpr float EXTERNAL_TEMP_SCALE = 0.011f;
         // Y-axis Accelerometer (Port 5)
-        static constexpr float ACCEL_Y_OFFSET = 1.612f;
-        static constexpr float ACCEL_Y_SCALE = 0.222f;
+        static constexpr float ACCEL_Y_OFFSET = 1.651f;
+        static constexpr float ACCEL_Y_SCALE = 0.224f;
         // X-axis Accelerometer (Port 6)
-        static constexpr float ACCEL_X_OFFSET = 1.623f;
-        static constexpr float ACCEL_X_SCALE = 0.21f;
+        static constexpr float ACCEL_X_OFFSET = 1.651f;
+        static constexpr float ACCEL_X_SCALE = 0.224f;
+
     };
 };
-
-// ============================================================================
-// DECODED PAYLOAD DATA STRUCTURE
-// ============================================================================
 
 struct AnalogSensorData {
     float voltage = 0.0f;

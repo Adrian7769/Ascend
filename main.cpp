@@ -1,13 +1,15 @@
 #include "GmailAuth.h"
 #include "GmailClient.h"
 #include "logger.h"
+#include "config.h"
+#include "Decoder.h"
 #include <iostream>
 #include <set>
 #include <string>
 #include <thread>
 #include <chrono>
 #include <ctime>
-#include "config.h"
+
 Logger logger("logs/debug.log", LOG_DEBUG);
 int main() {
     // Gmail Auth Instance
@@ -18,6 +20,10 @@ int main() {
     }
     // The Client Instance
     GmailClient client(auth);
+    // Create Decoder Instance
+    Decoder decoder;
+    std::set<std::string> processedIds;
+    std::vector<EmailContent> telemetryHistory;
     time_t lastCheckTime = time(nullptr);
     logger.log(LOG_INFO, "Monitoring started, polling every: " + std::to_string(POLL_INTERVAL_MINUTES) + " minutes...");
     while (true) {
@@ -27,9 +33,25 @@ int main() {
             logger.log(LOG_INFO,"Found " + std::to_string(message.size()) + " new message(s)");
             for (size_t i = 0; i < message.size(); ++i) { //messages.size() returns size_t, compare size_t to size_t to avoid compiler error.
                 const GmailMessage msg = message[i];
-                logger.log(LOG_INFO, msg.bodyText);
-                
-                logger.log(LOG_INFO, "  Processing message from: " + msg.from);
+                logger.log(LOG_INFO, "Processing message from: " + msg.from);
+                // Skip if processed
+                if (processedIds.count(msg.id) > 0) {
+                    continue;
+                }
+                // Parse the ballon telemetry Data
+                EmailContent telemetry = decoder.parseEmail(msg.bodyText);
+                if (telemetry.isValid && telemetry.payload.isValid) {
+                    telemetryHistory.push_back(telemetry);
+
+                    // Display complete telemetry
+                    logger.log(LOG_INFO, "\n" + telemetry.toString() + "\n");
+               
+                } else {
+                    logger.log(LOG_WARNING, "Failed to parse valid telemetry from message");
+                    logger.log(LOG_INFO, "Body preview: " + msg.bodyText.substr(0, 200));
+                }                    
+                // Updated the processedIds Vector
+                processedIds.insert(msg.id);
             }
             // Update last check time
             lastCheckTime = time(nullptr);

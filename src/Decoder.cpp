@@ -85,7 +85,6 @@ std::string Decoder::extractField(const std::string& text, const std::string& fi
 // Convert hex string to byte array
 std::vector<uint8_t> Decoder::hexStringToBytes(const std::string& hex) {
     std::vector<uint8_t> bytes;
-    // Remove any whitespace or non-hex characters
     std::string cleanHex;
     for (char c : hex) {
         // range based for loop, "For Each"
@@ -104,7 +103,6 @@ std::vector<uint8_t> Decoder::hexStringToBytes(const std::string& hex) {
     }
     return bytes;
 }
-
 PayloadData Decoder::decodeHexPayload(const std::string& hexString) {
     PayloadData payload;
     try {
@@ -112,75 +110,61 @@ PayloadData Decoder::decodeHexPayload(const std::string& hexString) {
         std::vector<uint8_t> bytes = hexStringToBytes(hexString); // vector of bytes
         logger.log(LOG_INFO, "Decoding hex payload: " + hexString.substr(0, 50) + "... " + "(" + std::to_string(bytes.size()) + " bytes)");
         
-        // Validate payload size
-        if (bytes.size() < PayloadConfig::EXPECTED_PAYLOAD_SIZE) {
-            logger.log(LOG_WARNING, "Payload too short! Expected " + std::to_string(PayloadConfig::EXPECTED_PAYLOAD_SIZE) + " bytes, got " + std::to_string(bytes.size()));
+        // Validate Hex Array Length (Should be 48 - 50 bytes)
+        if (bytes.size() < PayloadConfig::EXPECTED_PAYLOAD_SIZE) {logger.log(LOG_WARNING, "Payload too short! Expected " + std::to_string(PayloadConfig::EXPECTED_PAYLOAD_SIZE) + " bytes, got " + std::to_string(bytes.size()));
             return payload;
         }
+
         char header1 = static_cast<char>(bytes[PayloadConfig::HEADER_BYTE_0]);
         char header2 = static_cast<char>(bytes[PayloadConfig::HEADER_BYTE_1]);
         // Access the Header at PayloadConfig::HEADER_BYTE_0 within the clean byte array
         payload.header = std::string(1, header1) + std::string(1, header2);
-        payload.headerValid = (payload.header == "RB");
+        payload.headerValid = (payload.header == "RB"); // Validate Payload Header
         logger.log(LOG_INFO, "  Header: " + payload.header + (payload.headerValid ? " Valid" : " Not Valid (expected 'RB')"));
-        
-        payload.serialNumber = (bytes[PayloadConfig::SERIAL_BYTE_0] << 16) |
-                              (bytes[PayloadConfig::SERIAL_BYTE_1] << 8) |
-                               bytes[PayloadConfig::SERIAL_BYTE_2];
+
+        // Reconstruct Payload Serial number 3 bytes 
+        payload.serialNumber = (bytes[PayloadConfig::SERIAL_BYTE_0] << 16) | (bytes[PayloadConfig::SERIAL_BYTE_1] << 8) | bytes[PayloadConfig::SERIAL_BYTE_2]; 
         logger.log(LOG_INFO, "  RockBLOCK Serial: " + std::to_string(payload.serialNumber));
         
-        // ===== UTC TIME =====
+        // Set UTC Time, HOURS, MIN, SECOND
         payload.utcHours = bytes[PayloadConfig::UTC_HOURS];
         payload.utcMinutes = bytes[PayloadConfig::UTC_MINUTES];
         payload.utcSeconds = bytes[PayloadConfig::UTC_SECONDS];
-        logger.log(LOG_INFO, "  UTC Time: " + std::to_string(payload.utcHours) + ":" +
-                  std::to_string(payload.utcMinutes) + ":" + std::to_string(payload.utcSeconds));
+        logger.log(LOG_INFO, "  UTC Time: " + std::to_string(payload.utcHours) + ":" + std::to_string(payload.utcMinutes) + ":" + std::to_string(payload.utcSeconds));
         
-        // ===== GPS LATITUDE =====
+        // SET GPS LAT DATA
         payload.latitudeDMS.degrees = bytes[PayloadConfig::LAT_DEGREES];
         payload.latitudeDMS.minutes = bytes[PayloadConfig::LAT_MINUTES];
         payload.latitudeDMS.seconds = bytes[PayloadConfig::LAT_SECONDS];
         payload.latitudeDMS.hemisphere = (bytes[PayloadConfig::LAT_HEMISPHERE] == 0) ? 'N' : 'S';
         
         // Convert to decimal degrees
-        payload.latitude = payload.latitudeDMS.degrees +
-                          (payload.latitudeDMS.minutes / 60.0) +
-                          (payload.latitudeDMS.seconds / 3600.0);
+        payload.latitude = payload.latitudeDMS.degrees + (payload.latitudeDMS.minutes / 60.0) + (payload.latitudeDMS.seconds / 3600.0);
         if (payload.latitudeDMS.hemisphere == 'S') {
             payload.latitude = -payload.latitude;
         }
         
-        logger.log(LOG_INFO, "  Latitude: " + std::to_string(payload.latitudeDMS.degrees) + "° " +
-                  std::to_string(payload.latitudeDMS.minutes) + "' " +
-                  std::to_string(payload.latitudeDMS.seconds) + "\" " +
-                  std::string(1, payload.latitudeDMS.hemisphere) +
-                  " = " + std::to_string(payload.latitude) + "°");
+        logger.log(LOG_INFO, "  Latitude: " + std::to_string(payload.latitudeDMS.degrees) + "° " + std::to_string(payload.latitudeDMS.minutes) + "' " + std::to_string(payload.latitudeDMS.seconds) + "\" " + std::string(1, payload.latitudeDMS.hemisphere) + " = " + std::to_string(payload.latitude) + "°");
         
-        // ===== GPS LONGITUDE =====
+        // SET GPS LON DATA
         payload.longitudeDMS.degrees = bytes[PayloadConfig::LON_DEGREES];
         payload.longitudeDMS.minutes = bytes[PayloadConfig::LON_MINUTES];
         payload.longitudeDMS.seconds = bytes[PayloadConfig::LON_SECONDS];
         payload.longitudeDMS.hemisphere = (bytes[PayloadConfig::LON_HEMISPHERE] == 0) ? 'E' : 'W';
         
         // Convert to decimal degrees
-        payload.longitude = payload.longitudeDMS.degrees +
-                           (payload.longitudeDMS.minutes / 60.0) +
-                           (payload.longitudeDMS.seconds / 3600.0);
+        payload.longitude = payload.longitudeDMS.degrees + (payload.longitudeDMS.minutes / 60.0) + (payload.longitudeDMS.seconds / 3600.0);
         if (payload.longitudeDMS.hemisphere == 'W') {
             payload.longitude = -payload.longitude;
         }
         
-        logger.log(LOG_INFO, "  Longitude: " + std::to_string(payload.longitudeDMS.degrees) + "° " +
-                  std::to_string(payload.longitudeDMS.minutes) + "' " +
-                  std::to_string(payload.longitudeDMS.seconds) + "\" " +
-                  std::string(1, payload.longitudeDMS.hemisphere) +
-                  " = " + std::to_string(payload.longitude) + "°");
+        logger.log(LOG_INFO, "  Longitude: " + std::to_string(payload.longitudeDMS.degrees) + "° " + std::to_string(payload.longitudeDMS.minutes) + "' " + std::to_string(payload.longitudeDMS.seconds) + "\" " + std::string(1, payload.longitudeDMS.hemisphere) + " = " + std::to_string(payload.longitude) + "°");
         
         // ===== ALTITUDE (4 bytes, big-endian int32) =====
         payload.altitude = (bytes[PayloadConfig::ALTITUDE_BYTE_0] << 24) |
                           (bytes[PayloadConfig::ALTITUDE_BYTE_1] << 16) |
                           (bytes[PayloadConfig::ALTITUDE_BYTE_2] << 8) |
-                           bytes[PayloadConfig::ALTITUDE_BYTE_3];
+                           bytes[PayloadConfig::ALTITUDE_BYTE_3]; //  Reconstruct Altitude Bytes
         payload.altitudeUnits = (bytes[PayloadConfig::ALTITUDE_UNITS] == 0) ? "meters" : "feet";
         logger.log(LOG_INFO, "  Altitude: " + std::to_string(payload.altitude) + " " + payload.altitudeUnits);
         
@@ -188,18 +172,18 @@ PayloadData Decoder::decodeHexPayload(const std::string& hexString) {
         logger.log(LOG_INFO, "  Analog Sensors:");
         
         // Helper lambda to read 16-bit value (MSB first)
-        auto readAnalogPort = [&bytes](int portNumber) -> uint16_t {
+        auto readAnalogPort = [&bytes](int portNumber) -> uint16_t { // lambda function to read &bytes by reference pass in port number return byte
             int baseIndex = PayloadConfig::ANALOG_DATA_BASE + (portNumber * PayloadConfig::BYTES_PER_PORT);
-            uint8_t msb = bytes[baseIndex];
-            uint8_t lsb = bytes[baseIndex + 1];
-            return (msb << 8) | lsb;
+            uint8_t msb = bytes[baseIndex]; // each port is two bytes get MSB
+            uint8_t lsb = bytes[baseIndex + 1]; // get second byte which is LSB
+            return (msb << 8) | lsb; // return combined
         };
         
         // Decode each sensor port
         payload.internalTemp = decodeInternalTemp(readAnalogPort(PayloadConfig::PORT_INTERNAL_TEMP));
         payload.pressure = decodePressure(readAnalogPort(PayloadConfig::PORT_PRESSURE));
-        payload.uvLight = decodeUVLight(readAnalogPort(PayloadConfig::PORT_UV_LIGHT));
-        payload.unused = decodeBattery(readAnalogPort(PayloadConfig::PORT_UNUSED));  // Just read as voltage
+        // This is to decode Team 2 UV Light Sensor Data
+        //payload.uvLight = decodeUVLight(readAnalogPort(PayloadConfig::PORT_UV_LIGHT));
         payload.externalTemp = decodeExternalTemp(readAnalogPort(PayloadConfig::PORT_EXTERNAL_TEMP));
         payload.accelY = decodeAccelY(readAnalogPort(PayloadConfig::PORT_ACCEL_Y));
         payload.accelX = decodeAccelX(readAnalogPort(PayloadConfig::PORT_ACCEL_X));
@@ -207,28 +191,23 @@ PayloadData Decoder::decodeHexPayload(const std::string& hexString) {
         
         // Log each sensor
         auto logSensor = [](const AnalogSensorData& sensor) {
-            if (sensor.isValid) {
-                logger.log(LOG_INFO, "    " + sensor.name + ": " + 
-                          std::to_string(sensor.measurement) + " " + sensor.unit +
-                          " (Voltage: " + std::to_string(sensor.voltage) + " V)");
+            if (sensor.isValid) { logger.log(LOG_INFO, "    " + sensor.name + ": " + std::to_string(sensor.measurement) + " " + sensor.unit + " (Voltage: " + std::to_string(sensor.voltage) + " V)");
             }
         };
         
         logSensor(payload.internalTemp);
         logSensor(payload.pressure);
-        logSensor(payload.uvLight);
+        //logSensor(payload.uvLight);
         logSensor(payload.externalTemp);
         logSensor(payload.accelY);
         logSensor(payload.accelX);
-        logSensor(payload.battery);
+        logSensor(payload.battery); 
         
-        // ===== MODEM STATUS =====
-        payload.modemStatus = (bytes[PayloadConfig::MODEM_STATUS_MSB] << 8) |
-                              bytes[PayloadConfig::MODEM_STATUS_LSB];
+        // Modem Status
+        payload.modemStatus = (bytes[PayloadConfig::MODEM_STATUS_MSB] << 8) | bytes[PayloadConfig::MODEM_STATUS_LSB];
         payload.modemStatusDescription = getModemStatusDescription(payload.modemStatus);
-        logger.log(LOG_INFO, "  Modem Status: " + std::to_string(payload.modemStatus) + 
-                  " - " + payload.modemStatusDescription);
-        
+
+        logger.log(LOG_INFO, "  Modem Status: " + std::to_string(payload.modemStatus) + " - " + payload.modemStatusDescription);
         payload.isValid = payload.headerValid;
         
     } catch (const std::exception& e) {
@@ -239,25 +218,33 @@ PayloadData Decoder::decodeHexPayload(const std::string& hexString) {
     return payload;
 }
 
-// ============================================================================
-// SENSOR DECODERS (Use calibration from PayloadConfig::SensorCalibration)
-// ============================================================================
+/*
+AnalogSensorData Decoder::decodeUVLight(uint16_t rawValue) {
+    AnalogSensorData sensor;
+    sensor.name = "UV Light";
+    sensor.voltage = rawValue * PayloadConfig::SensorCalibration::ADC_TO_VOLTAGE;
+    
+    sensor.measurement = sensor.voltage / PayloadConfig::SensorCalibration::UV_SCALE;
+    sensor.unit = "UV Index";
+    sensor.isValid = true;
+    return sensor;
+}
 
+*/
+
+// Decode Sensor Values, Pass in the Raw value, which should be 
 AnalogSensorData Decoder::decodeInternalTemp(uint16_t rawValue) {
     AnalogSensorData sensor;
     sensor.name = "Internal Temperature";
     sensor.voltage = rawValue * PayloadConfig::SensorCalibration::ADC_TO_VOLTAGE;
-    
     float tempC = (sensor.voltage - PayloadConfig::SensorCalibration::INTERNAL_TEMP_OFFSET) /
                   PayloadConfig::SensorCalibration::INTERNAL_TEMP_SCALE;
     float tempF = (tempC * 1.8f) + 32.0f;
-    
     sensor.measurement = tempC;
     sensor.unit = "°C (" + std::to_string(static_cast<int>(tempF)) + "°F)";
     sensor.isValid = true;
     return sensor;
 }
-
 AnalogSensorData Decoder::decodePressure(uint16_t rawValue) {
     AnalogSensorData sensor;
     sensor.name = "Pressure";
@@ -266,17 +253,6 @@ AnalogSensorData Decoder::decodePressure(uint16_t rawValue) {
     sensor.measurement = (sensor.voltage - PayloadConfig::SensorCalibration::PRESSURE_OFFSET) /
                          PayloadConfig::SensorCalibration::PRESSURE_SCALE;
     sensor.unit = "PSI";
-    sensor.isValid = true;
-    return sensor;
-}
-
-AnalogSensorData Decoder::decodeUVLight(uint16_t rawValue) {
-    AnalogSensorData sensor;
-    sensor.name = "UV Light";
-    sensor.voltage = rawValue * PayloadConfig::SensorCalibration::ADC_TO_VOLTAGE;
-    
-    sensor.measurement = sensor.voltage / PayloadConfig::SensorCalibration::UV_SCALE;
-    sensor.unit = "UV Index";
     sensor.isValid = true;
     return sensor;
 }
@@ -323,7 +299,9 @@ AnalogSensorData Decoder::decodeAccelX(uint16_t rawValue) {
 AnalogSensorData Decoder::decodeBattery(uint16_t rawValue) {
     AnalogSensorData sensor;
     sensor.name = "Battery";
-    sensor.voltage = rawValue * PayloadConfig::SensorCalibration::ADC_TO_VOLTAGE;
+    sensor.voltage = (rawValue * PayloadConfig::SensorCalibration::ADC_TO_VOLTAGE) /
+                        PayloadConfig::SensorCalibration::BATTERY_IDEAL_OFFSET;
+
     sensor.measurement = sensor.voltage;
     sensor.unit = "V";
     sensor.isValid = true;
@@ -372,9 +350,9 @@ std::string PayloadData::toString() const {
     ss << std::fixed << std::setprecision(2);
     
     ss << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
-    ss << "📦 DECODED PAYLOAD DATA\n";
+    ss << " DECODED PAYLOAD DATA\n";
     ss << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
-    ss << "Header:          " << header << (headerValid ? " ✓" : " ✗") << "\n";
+    ss << "Header:          " << header << (headerValid ? " Valid" : " Not Valid") << "\n";
     ss << "Serial Number:   " << serialNumber << "\n";
     ss << "UTC Time:        " << static_cast<int>(utcHours) << ":" 
        << static_cast<int>(utcMinutes) << ":" << static_cast<int>(utcSeconds) << "\n";
@@ -389,15 +367,15 @@ std::string PayloadData::toString() const {
        << static_cast<int>(longitudeDMS.seconds) << "\" "
        << longitudeDMS.hemisphere << ")\n";
     ss << "Altitude:        " << altitude << " " << altitudeUnits << "\n";
-    ss << "\n🌡️  SENSORS:\n";
+    ss << "\n️  SENSORS:\n";
     ss << "  " << internalTemp.name << ": " << internalTemp.measurement << " " << internalTemp.unit << "\n";
     ss << "  " << externalTemp.name << ": " << externalTemp.measurement << " " << externalTemp.unit << "\n";
     ss << "  " << pressure.name << ": " << pressure.measurement << " " << pressure.unit << "\n";
-    ss << "  " << uvLight.name << ": " << uvLight.measurement << " " << uvLight.unit << "\n";
+    //ss << "  " << uvLight.name << ": " << uvLight.measurement << " " << uvLight.unit << "\n";
     ss << "  " << accelX.name << ": " << accelX.measurement << " " << accelX.unit << "\n";
     ss << "  " << accelY.name << ": " << accelY.measurement << " " << accelY.unit << "\n";
     ss << "  " << battery.name << ": " << battery.measurement << " " << battery.unit << "\n";
-    ss << "\n📡 Modem Status: " << modemStatus << " - " << modemStatusDescription << "\n";
+    ss << "\n Modem Status: " << modemStatus << " - " << modemStatusDescription << "\n";
     ss << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
     
     return ss.str();
@@ -406,7 +384,7 @@ std::string PayloadData::toString() const {
 std::string EmailContent::toString() const {
     std::stringstream ss;
     ss << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
-    ss << "📡 BALLOON TELEMETRY (MOMSN: " << momsn << ")\n";
+    ss << " BALLOON TELEMETRY (MOMSN: " << momsn << ")\n";
     ss << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
     ss << "IMEI:            " << imei << "\n";
     ss << "Transmit Time:   " << transmitTime << "\n";
