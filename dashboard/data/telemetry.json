@@ -1,0 +1,75 @@
+{
+  "lastUpdated": 1771158519,
+  "telemetry": [
+    {
+      "hexData": "52420033f512183b202f2e006f16330100000228000000000000000000000000000000000000000000000000000000000000",
+      "imei": "300534065390120",
+      "iridiumCep": 4.0,
+      "iridiumLatitude": 32.788,
+      "iridiumLongitude": -111.3412,
+      "isValid": true,
+      "momsn": 39,
+      "payload": {
+        "altitude": 552,
+        "altitudeUnits": "meters",
+        "header": "RB",
+        "headerValid": true,
+        "latitude": 32.79611111111111,
+        "longitude": -111.38083333333333,
+        "modemStatus": 0,
+        "modemStatusDescription": "Unknown: 0",
+        "sensors": {
+          "accelX": {
+            "isValid": true,
+            "measurement": -7.370535373687744,
+            "name": "X-axis Accelerometer",
+            "unit": "G",
+            "voltage": 0.0
+          },
+          "accelY": {
+            "isValid": true,
+            "measurement": -7.370535373687744,
+            "name": "Y-axis Accelerometer",
+            "unit": "G",
+            "voltage": 0.0
+          },
+          "battery": {
+            "isValid": true,
+            "measurement": 0.0,
+            "name": "Battery",
+            "unit": "V",
+            "voltage": 0.0
+          },
+          "externalTemp": {
+            "isValid": true,
+            "measurement": -44.6363639831543,
+            "name": "External Temperature",
+            "unit": "°C (-48°F)",
+            "voltage": 0.0
+          },
+          "internalTemp": {
+            "isValid": true,
+            "measurement": -45.63636016845703,
+            "name": "Internal Temperature",
+            "unit": "°C (-50°F)",
+            "voltage": 0.0
+          },
+          "pressure": {
+            "isValid": true,
+            "measurement": -3.8951311111450195,
+            "name": "Pressure",
+            "unit": "PSI",
+            "voltage": 0.0
+          }
+        },
+        "serialNumber": 13301,
+        "utcHours": 18,
+        "utcMinutes": 24,
+        "utcSeconds": 59
+      },
+      "sessionStatus": 0,
+      "transmitTime": "2025-03-29T18:25:13Z"
+    }
+  ],
+  "totalRecords": 1
+}

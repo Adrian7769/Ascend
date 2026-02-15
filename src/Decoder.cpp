@@ -128,7 +128,10 @@ PayloadData Decoder::decodeHexPayload(const std::string& hexString) {
         logger.log(LOG_INFO, "  RockBLOCK Serial: " + std::to_string(payload.serialNumber));
         
         // Set UTC Time, HOURS, MIN, SECOND
-        payload.utcHours = bytes[PayloadConfig::UTC_HOURS];
+        payload.utcHours = bytes[PayloadConfig::UTC_HOURS]; // std::byte bytes[5] = {1,2,3,4,5}
+                                                            // const GNSS_DATA = 2;
+                                                            // std::cout << bytes[GNSS_DATA] << std::endl;
+                                                            // 3
         payload.utcMinutes = bytes[PayloadConfig::UTC_MINUTES];
         payload.utcSeconds = bytes[PayloadConfig::UTC_SECONDS];
         logger.log(LOG_INFO, "  UTC Time: " + std::to_string(payload.utcHours) + ":" + std::to_string(payload.utcMinutes) + ":" + std::to_string(payload.utcSeconds));

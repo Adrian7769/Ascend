@@ -22,7 +22,7 @@ struct PayloadConfig {
     // *************************************** TEAM 2 GNSS (DATA) *************************************** //
 
     // UTC Time (3 bytes)
-    static const int UTC_HOURS = 5;
+    static const int UTC_HOURS = 5; // if this is greater the 24 its an error
     static const int UTC_MINUTES = 6;
     static const int UTC_SECONDS = 7;
     // GPS Latitude (4 bytes)
@@ -48,7 +48,6 @@ struct PayloadConfig {
     // Each port is in the byte array at: BASE + (port_number * 2)
     static const int ANALOG_DATA_BASE = 21; // At what index does you analog data start
     static const int BYTES_PER_PORT = 2; // Bytes per port
-
     // ANALOG PORTS TEAM 1
     static const int PORT_INTERNAL_TEMP = 4;
     static const int PORT_PRESSURE = 2;
