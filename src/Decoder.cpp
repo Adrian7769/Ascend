@@ -117,6 +117,7 @@ PayloadData Decoder::decodeHexPayload(const std::string& hexString) {
 
         char header1 = static_cast<char>(bytes[PayloadConfig::HEADER_BYTE_0]);
         char header2 = static_cast<char>(bytes[PayloadConfig::HEADER_BYTE_1]);
+
         // Access the Header at PayloadConfig::HEADER_BYTE_0 within the clean byte array
         payload.header = std::string(1, header1) + std::string(1, header2);
         payload.headerValid = (payload.header == "RB"); // Validate Payload Header
@@ -182,6 +183,7 @@ PayloadData Decoder::decodeHexPayload(const std::string& hexString) {
         // Decode each sensor port
         payload.internalTemp = decodeInternalTemp(readAnalogPort(PayloadConfig::PORT_INTERNAL_TEMP));
         payload.pressure = decodePressure(readAnalogPort(PayloadConfig::PORT_PRESSURE));
+
         // This is to decode Team 2 UV Light Sensor Data
         //payload.uvLight = decodeUVLight(readAnalogPort(PayloadConfig::PORT_UV_LIGHT));
         payload.externalTemp = decodeExternalTemp(readAnalogPort(PayloadConfig::PORT_EXTERNAL_TEMP));
@@ -206,7 +208,6 @@ PayloadData Decoder::decodeHexPayload(const std::string& hexString) {
         // Modem Status
         payload.modemStatus = (bytes[PayloadConfig::MODEM_STATUS_MSB] << 8) | bytes[PayloadConfig::MODEM_STATUS_LSB];
         payload.modemStatusDescription = getModemStatusDescription(payload.modemStatus);
-
         logger.log(LOG_INFO, "  Modem Status: " + std::to_string(payload.modemStatus) + " - " + payload.modemStatusDescription);
         payload.isValid = payload.headerValid;
         
@@ -229,7 +230,6 @@ AnalogSensorData Decoder::decodeUVLight(uint16_t rawValue) {
     sensor.isValid = true;
     return sensor;
 }
-
 */
 
 // Decode Sensor Values, Pass in the Raw value, which should be 
@@ -256,7 +256,6 @@ AnalogSensorData Decoder::decodePressure(uint16_t rawValue) {
     sensor.isValid = true;
     return sensor;
 }
-
 AnalogSensorData Decoder::decodeExternalTemp(uint16_t rawValue) {
     AnalogSensorData sensor;
     sensor.name = "External Temperature";
@@ -271,7 +270,6 @@ AnalogSensorData Decoder::decodeExternalTemp(uint16_t rawValue) {
     sensor.isValid = true;
     return sensor;
 }
-
 AnalogSensorData Decoder::decodeAccelY(uint16_t rawValue) {
     AnalogSensorData sensor;
     sensor.name = "Y-axis Accelerometer";
@@ -283,7 +281,6 @@ AnalogSensorData Decoder::decodeAccelY(uint16_t rawValue) {
     sensor.isValid = true;
     return sensor;
 }
-
 AnalogSensorData Decoder::decodeAccelX(uint16_t rawValue) {
     AnalogSensorData sensor;
     sensor.name = "X-axis Accelerometer";
@@ -295,7 +292,6 @@ AnalogSensorData Decoder::decodeAccelX(uint16_t rawValue) {
     sensor.isValid = true;
     return sensor;
 }
-
 AnalogSensorData Decoder::decodeBattery(uint16_t rawValue) {
     AnalogSensorData sensor;
     sensor.name = "Battery";
@@ -307,10 +303,6 @@ AnalogSensorData Decoder::decodeBattery(uint16_t rawValue) {
     sensor.isValid = true;
     return sensor;
 }
-
-// ============================================================================
-// MODEM STATUS DECODER (from Java code status codes)
-// ============================================================================
 
 std::string Decoder::getModemStatusDescription(uint16_t status) {
     switch (status) {
@@ -348,10 +340,7 @@ std::string Decoder::getModemStatusDescription(uint16_t status) {
 std::string PayloadData::toString() const {
     std::stringstream ss;
     ss << std::fixed << std::setprecision(2);
-    
-    ss << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
     ss << " DECODED PAYLOAD DATA\n";
-    ss << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
     ss << "Header:          " << header << (headerValid ? " Valid" : " Not Valid") << "\n";
     ss << "Serial Number:   " << serialNumber << "\n";
     ss << "UTC Time:        " << static_cast<int>(utcHours) << ":" 
@@ -376,16 +365,12 @@ std::string PayloadData::toString() const {
     ss << "  " << accelY.name << ": " << accelY.measurement << " " << accelY.unit << "\n";
     ss << "  " << battery.name << ": " << battery.measurement << " " << battery.unit << "\n";
     ss << "\n Modem Status: " << modemStatus << " - " << modemStatusDescription << "\n";
-    ss << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
-    
     return ss.str();
 }
 
 std::string EmailContent::toString() const {
     std::stringstream ss;
-    ss << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
     ss << " BALLOON TELEMETRY (MOMSN: " << momsn << ")\n";
-    ss << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
     ss << "IMEI:            " << imei << "\n";
     ss << "Transmit Time:   " << transmitTime << "\n";
     ss << "Iridium Lat:     " << iridiumLatitude << "°\n";
@@ -393,6 +378,5 @@ std::string EmailContent::toString() const {
     ss << "Iridium CEP:     " << iridiumCep << "\n";
     ss << "Session Status:  " << sessionStatus << "\n";
     ss << "\n" << payload.toString();
-    
     return ss.str();
 }

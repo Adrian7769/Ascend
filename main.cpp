@@ -42,10 +42,9 @@ int main() {
                 EmailContent telemetry = decoder.parseEmail(msg.bodyText);
                 if (telemetry.isValid && telemetry.payload.isValid) {
                     telemetryHistory.push_back(telemetry);
-
                     // Display complete telemetry
                     logger.log(LOG_INFO, "\n" + telemetry.toString() + "\n");
-               
+
                 } else {
                     logger.log(LOG_WARNING, "Failed to parse valid telemetry from message");
                     logger.log(LOG_INFO, "Body preview: " + msg.bodyText.substr(0, 200));
