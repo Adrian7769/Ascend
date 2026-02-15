@@ -5,3 +5,4 @@ main.exe
 /logs
 libcurl-x64.dll
 /Documentation
+/dashboard/data/logs.json

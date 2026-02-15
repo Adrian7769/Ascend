@@ -1,0 +1,1041 @@
+{
+  "lastUpdated": 1711742500,
+  "totalRecords": 15,
+  "telemetry": [
+    {
+      "momsn": 50,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 18:25:10",
+      "iridiumLatitude": 33.409332,
+      "iridiumLongitude": -111.843357,
+      "iridiumCep": 11.9,
+      "sessionStatus": 0,
+      "hexData": "52420033ff12190a211836006f313501000004b0010000000003ec008d00990152015103c302000002000203020303000192",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 18,
+        "utcMinutes": 25,
+        "utcSeconds": 10,
+        "latitude": 33.415,
+        "longitude": -111.831389,
+        "altitude": 1200,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.7479,
+            "measurement": 22.35,
+            "unit": "\u00b0C (72\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.6892,
+            "measurement": 18.02,
+            "unit": "\u00b0C (64\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 4.9076,
+            "measurement": 14.49,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.6521,
+            "measurement": 0.01,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.6473,
+            "measurement": -0.02,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.8477,
+            "measurement": 4.85,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 402,
+        "modemStatusDescription": "Transmit Successful And No Receive"
+      }
+    },
+    {
+      "momsn": 51,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 18:30:13",
+      "iridiumLatitude": 33.43821,
+      "iridiumLongitude": -111.825147,
+      "iridiumCep": 6.4,
+      "sessionStatus": 0,
+      "hexData": "52420033ff121e0d21190f006f312c01000016a801000000000369007b00960154015003bd02010303000100030203030192",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 18,
+        "utcMinutes": 30,
+        "utcSeconds": 13,
+        "latitude": 33.420833,
+        "longitude": -111.828889,
+        "altitude": 5800,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.7332,
+            "measurement": 21.02,
+            "unit": "\u00b0C (69\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.6012,
+            "measurement": 10.02,
+            "unit": "\u00b0C (50\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 4.2672,
+            "measurement": 12.09,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.6619,
+            "measurement": 0.05,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.6424,
+            "measurement": -0.04,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.8175,
+            "measurement": 4.82,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 402,
+        "modemStatusDescription": "Transmit Successful And No Receive"
+      }
+    },
+    {
+      "momsn": 52,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 18:35:16",
+      "iridiumLatitude": 33.439034,
+      "iridiumLongitude": -111.810513,
+      "iridiumCep": 6.7,
+      "sessionStatus": 0,
+      "hexData": "52420033ff12231021192a006f311a01000038a4010000000002ec006700920155014f03b900030300020003030101000193",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 18,
+        "utcMinutes": 35,
+        "utcSeconds": 16,
+        "latitude": 33.428333,
+        "longitude": -111.823889,
+        "altitude": 14500,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.7136,
+            "measurement": 19.24,
+            "unit": "\u00b0C (66\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.5035,
+            "measurement": 1.13,
+            "unit": "\u00b0C (34\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 3.6562,
+            "measurement": 9.8,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.6668,
+            "measurement": 0.07,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.6375,
+            "measurement": -0.06,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.7974,
+            "measurement": 4.8,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 403,
+        "modemStatusDescription": "Transmit And Receive Successful"
+      }
+    },
+    {
+      "momsn": 53,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 18:40:19",
+      "iridiumLatitude": 33.443014,
+      "iridiumLongitude": -111.805241,
+      "iridiumCep": 10.9,
+      "sessionStatus": 0,
+      "hexData": "52420033ff122813211a02006f31040100006d60010000000002270047008c0150015303b500030200000303020100030192",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 18,
+        "utcMinutes": 40,
+        "utcSeconds": 19,
+        "latitude": 33.433889,
+        "longitude": -111.817778,
+        "altitude": 28000,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.6843,
+            "measurement": 16.57,
+            "unit": "\u00b0C (61\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.347,
+            "measurement": -13.09,
+            "unit": "\u00b0C (8\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 2.6933,
+            "measurement": 6.19,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.6424,
+            "measurement": -0.04,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.657,
+            "measurement": 0.03,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.7773,
+            "measurement": 4.78,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 402,
+        "modemStatusDescription": "Transmit Successful And No Receive"
+      }
+    },
+    {
+      "momsn": 54,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 18:45:22",
+      "iridiumLatitude": 33.443651,
+      "iridiumLongitude": -111.8112,
+      "iridiumCep": 8.0,
+      "sessionStatus": 0,
+      "hexData": "52420033ff122d16211a1c006f3027010000a41001000000000193002400860157014a03af03030001010102030200030192",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 18,
+        "utcMinutes": 45,
+        "utcSeconds": 22,
+        "latitude": 33.441111,
+        "longitude": -111.810833,
+        "altitude": 42000,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.655,
+            "measurement": 13.91,
+            "unit": "\u00b0C (57\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.176,
+            "measurement": -28.64,
+            "unit": "\u00b0C (-19\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 1.9699,
+            "measurement": 3.48,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.6766,
+            "measurement": 0.11,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.613,
+            "measurement": -0.17,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.747,
+            "measurement": 4.75,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 402,
+        "modemStatusDescription": "Transmit Successful And No Receive"
+      }
+    },
+    {
+      "momsn": 55,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 18:50:25",
+      "iridiumLatitude": 33.448991,
+      "iridiumLongitude": -111.810523,
+      "iridiumCep": 5.2,
+      "sessionStatus": 0,
+      "hexData": "52420033ff123219211a38006f3007010000e4840100000000013700070080014e015503a902000100030003020002020192",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 18,
+        "utcMinutes": 50,
+        "utcSeconds": 25,
+        "latitude": 33.448889,
+        "longitude": -111.801944,
+        "altitude": 58500,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.6257,
+            "measurement": 11.24,
+            "unit": "\u00b0C (52\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.0342,
+            "measurement": -41.53,
+            "unit": "\u00b0C (-42\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 1.5202,
+            "measurement": 1.8,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.6326,
+            "measurement": -0.08,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.6668,
+            "measurement": 0.07,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.7168,
+            "measurement": 4.72,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 402,
+        "modemStatusDescription": "Transmit Successful And No Receive"
+      }
+    },
+    {
+      "momsn": 56,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 18:55:28",
+      "iridiumLatitude": 33.461215,
+      "iridiumLongitude": -111.79469,
+      "iridiumCep": 3.0,
+      "sessionStatus": 0,
+      "hexData": "52420033ff12371c211b13006f2f220100011940010000000001080000007a0153015003a501000300030101020103020193",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 18,
+        "utcMinutes": 55,
+        "utcSeconds": 28,
+        "latitude": 33.455278,
+        "longitude": -111.792778,
+        "altitude": 72000,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.5963,
+            "measurement": 8.58,
+            "unit": "\u00b0C (47\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.0,
+            "measurement": -44.64,
+            "unit": "\u00b0C (-48\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 1.2904,
+            "measurement": 0.94,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.657,
+            "measurement": 0.03,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.6424,
+            "measurement": -0.04,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.6967,
+            "measurement": 4.7,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 403,
+        "modemStatusDescription": "Transmit And Receive Successful"
+      }
+    },
+    {
+      "momsn": 57,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 18:00:31",
+      "iridiumLatitude": 33.453092,
+      "iridiumLongitude": -111.789876,
+      "iridiumCep": 5.8,
+      "sessionStatus": 0,
+      "hexData": "52420033ff12001f211b2e006f2f050100014c08010000000000f100000074015b0149039f01030202030301020001000192",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 18,
+        "utcMinutes": 0,
+        "utcSeconds": 31,
+        "latitude": 33.462778,
+        "longitude": -111.784722,
+        "altitude": 85000,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.567,
+            "measurement": 5.91,
+            "unit": "\u00b0C (42\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.0,
+            "measurement": -44.64,
+            "unit": "\u00b0C (-48\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 1.178,
+            "measurement": 0.52,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.6961,
+            "measurement": 0.2,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.6082,
+            "measurement": -0.19,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.6665,
+            "measurement": 4.67,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 402,
+        "modemStatusDescription": "Transmit Successful And No Receive"
+      }
+    },
+    {
+      "momsn": 58,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 18:05:34",
+      "iridiumLatitude": 33.45169,
+      "iridiumLongitude": -111.769288,
+      "iridiumCep": 10.3,
+      "sessionStatus": 0,
+      "hexData": "52420033ff120522211c0f006f2e210100017700010000000000e40000006e01410165039b03020303010200020300010192",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 18,
+        "utcMinutes": 5,
+        "utcSeconds": 34,
+        "latitude": 33.470833,
+        "longitude": -111.775833,
+        "altitude": 96000,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.5377,
+            "measurement": 3.24,
+            "unit": "\u00b0C (37\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.0,
+            "measurement": -44.64,
+            "unit": "\u00b0C (-48\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 1.1145,
+            "measurement": 0.28,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.569,
+            "measurement": -0.37,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.745,
+            "measurement": 0.42,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.6464,
+            "measurement": 4.65,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 402,
+        "modemStatusDescription": "Transmit Successful And No Receive"
+      }
+    },
+    {
+      "momsn": 59,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 18:10:37",
+      "iridiumLatitude": 33.46958,
+      "iridiumLongitude": -111.751224,
+      "iridiumCep": 2.7,
+      "sessionStatus": 2,
+      "hexData": "52420033ff120a25211c2a006f2e040100019a28010000000000dc00000069017a011a03950102030200020101010201012c",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 18,
+        "utcMinutes": 10,
+        "utcSeconds": 37,
+        "latitude": 33.478333,
+        "longitude": -111.767778,
+        "altitude": 105000,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.5132,
+            "measurement": 1.02,
+            "unit": "\u00b0C (33\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.0,
+            "measurement": -44.64,
+            "unit": "\u00b0C (-48\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 1.0754,
+            "measurement": 0.13,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.8477,
+            "measurement": 0.88,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.3784,
+            "measurement": -1.22,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.6162,
+            "measurement": 4.62,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 300,
+        "modemStatusDescription": "Success Byte After SBDIX"
+      }
+    },
+    {
+      "momsn": 60,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 18:15:40",
+      "iridiumLatitude": 33.500473,
+      "iridiumLongitude": -111.749938,
+      "iridiumCep": 2.6,
+      "sessionStatus": 0,
+      "hexData": "52420033ff120f28211c3a006f2d2b010001a7d4010000000000da0000006501c400c3039101020203000100020203010192",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 18,
+        "utcMinutes": 15,
+        "utcSeconds": 40,
+        "latitude": 33.482778,
+        "longitude": -111.761944,
+        "altitude": 108500,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.4937,
+            "measurement": -0.76,
+            "unit": "\u00b0C (30\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.0,
+            "measurement": -44.64,
+            "unit": "\u00b0C (-48\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 1.0656,
+            "measurement": 0.1,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 2.2094,
+            "measurement": 2.49,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 0.9532,
+            "measurement": -3.12,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.596,
+            "measurement": 4.6,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 402,
+        "modemStatusDescription": "Transmit Successful And No Receive"
+      }
+    },
+    {
+      "momsn": 61,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 18:20:43",
+      "iridiumLatitude": 33.462374,
+      "iridiumLongitude": -111.747688,
+      "iridiumCep": 14.7,
+      "sessionStatus": 0,
+      "hexData": "52420033ff12142b211c2c006f2d030100014050010000000000f50000006d00ff01bf038d00020202030003020300030192",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 18,
+        "utcMinutes": 20,
+        "utcSeconds": 43,
+        "latitude": 33.478889,
+        "longitude": -111.750833,
+        "altitude": 82000,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.5328,
+            "measurement": 2.8,
+            "unit": "\u00b0C (37\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.0,
+            "measurement": -44.64,
+            "unit": "\u00b0C (-48\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 1.1976,
+            "measurement": 0.59,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.2464,
+            "measurement": -1.81,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 2.1849,
+            "measurement": 2.38,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.5759,
+            "measurement": 4.58,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 402,
+        "modemStatusDescription": "Transmit Successful And No Receive"
+      }
+    },
+    {
+      "momsn": 62,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 19:25:46",
+      "iridiumLatitude": 33.452251,
+      "iridiumLongitude": -111.734923,
+      "iridiumCep": 13.0,
+      "sessionStatus": 0,
+      "hexData": "52420033ff13192e211c13006f2c14010000d6d80100000000013c000d007b01660135038700030202030303000101020192",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 19,
+        "utcMinutes": 25,
+        "utcSeconds": 46,
+        "latitude": 33.471944,
+        "longitude": -111.738889,
+        "altitude": 55000,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.6012,
+            "measurement": 9.02,
+            "unit": "\u00b0C (48\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.0635,
+            "measurement": -38.86,
+            "unit": "\u00b0C (-37\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 1.5446,
+            "measurement": 1.89,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.7499,
+            "measurement": 0.44,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.5104,
+            "measurement": -0.63,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.5457,
+            "measurement": 4.55,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 402,
+        "modemStatusDescription": "Transmit Successful And No Receive"
+      }
+    },
+    {
+      "momsn": 63,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 19:30:49",
+      "iridiumLatitude": 33.47508,
+      "iridiumLongitude": -111.716348,
+      "iridiumCep": 4.8,
+      "sessionStatus": 0,
+      "hexData": "52420033ff131e31211b36006f2b280100006d60010000000002110044008901580148038102000300010101000201030193",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 19,
+        "utcMinutes": 30,
+        "utcSeconds": 49,
+        "latitude": 33.465,
+        "longitude": -111.727778,
+        "altitude": 28000,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.6697,
+            "measurement": 15.24,
+            "unit": "\u00b0C (59\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.3324,
+            "measurement": -14.42,
+            "unit": "\u00b0C (6\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 2.5858,
+            "measurement": 5.79,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.6815,
+            "measurement": 0.14,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.6033,
+            "measurement": -0.21,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.5155,
+            "measurement": 4.52,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 403,
+        "modemStatusDescription": "Transmit And Receive Successful"
+      }
+    },
+    {
+      "momsn": 64,
+      "imei": "300534065390120",
+      "transmitTime": "2025-03-29 19:35:52",
+      "iridiumLatitude": 33.443855,
+      "iridiumLongitude": -111.715134,
+      "iridiumCep": 5.4,
+      "sessionStatus": 0,
+      "hexData": "52420033ff132334211b1c006f2b0401000021340100000000037f00770095014e0154037d03000100020000000103030192",
+      "isValid": true,
+      "payload": {
+        "header": "RB",
+        "headerValid": true,
+        "serialNumber": 13311,
+        "utcHours": 19,
+        "utcMinutes": 35,
+        "utcSeconds": 52,
+        "latitude": 33.457778,
+        "longitude": -111.717778,
+        "altitude": 8500,
+        "altitudeUnits": "feet",
+        "sensors": {
+          "internalTemp": {
+            "name": "Internal Temperature",
+            "voltage": 0.7283,
+            "measurement": 20.57,
+            "unit": "\u00b0C (69\u00b0F)",
+            "isValid": true
+          },
+          "externalTemp": {
+            "name": "External Temperature",
+            "voltage": 0.5817,
+            "measurement": 8.24,
+            "unit": "\u00b0C (46\u00b0F)",
+            "isValid": true
+          },
+          "pressure": {
+            "name": "Pressure",
+            "voltage": 4.3748,
+            "measurement": 12.49,
+            "unit": "PSI",
+            "isValid": true
+          },
+          "accelX": {
+            "name": "X-axis Accelerometer",
+            "voltage": 1.6326,
+            "measurement": -0.08,
+            "unit": "G",
+            "isValid": true
+          },
+          "accelY": {
+            "name": "Y-axis Accelerometer",
+            "voltage": 1.6619,
+            "measurement": 0.05,
+            "unit": "G",
+            "isValid": true
+          },
+          "battery": {
+            "name": "Battery",
+            "voltage": 4.4953,
+            "measurement": 4.5,
+            "unit": "V",
+            "isValid": true
+          }
+        },
+        "modemStatus": 402,
+        "modemStatusDescription": "Transmit Successful And No Receive"
+      }
+    }
+  ]
+}
