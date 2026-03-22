@@ -242,4 +242,3 @@ std::string GmailClient::decodeBase64Url(const std::string& encoded) {
     }
     return decoded;
 }
-

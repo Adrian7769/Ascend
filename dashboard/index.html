@@ -3,273 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCC ASCEND // Telemetry Terminal</title>
+    <title>ASCEND // Flight Telemetry</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="crt-overlay"></div>
-    <div class="crt-flicker"></div>
+    <header class="status-bar">
+        <div class="sb-left">
+            <span class="logo">ASCEND</span>
+            <span class="logo-sub">Flight Telemetry</span>
+        </div>
+        <div class="sb-right">
+            <span class="sb-item"><span class="dot live"></span> LIVE</span>
+            <span class="sb-item">RX <span id="lastUpdate">--:--:--</span></span>
+            <span class="sb-item">MOMSN <span class="val" id="totalRecords">0</span></span>
+            <span class="sb-item">UP <span id="uptime">00:00:00</span></span>
+        </div>
+    </header>
 
-    <div class="main-container">
-        <div class="content-area">
-            <header>
-                <div class="term-prompt">
-                    <span class="term-user">root@gcc-ascend</span><span class="term-colon">:</span><span class="term-path">~/telemetry</span><span class="term-dollar">$</span>
-                    <span class="term-cmd"> ./monitor --live --poll=60s</span>
-                    <span class="cursor">█</span>
-                </div>
-                <div class="header-bar">
-                    <div class="header-left">
-                        <span class="ascii-logo">╔═══════════════════════════════════════╗
-║  GCC ASCEND TELEMETRY TERMINAL v2.0  ║
-╚═══════════════════════════════════════╝</span>
-                    </div>
-                    <div class="header-right">
-                        <div class="status-row">
-                            <span class="status-dot live"></span>
-                            <span class="status-label">STREAM</span>
-                            <span class="sep">│</span>
-                            <span class="status-label">LAST RX:</span>
-                            <span class="status-val" id="lastUpdate">--:--:--</span>
-                            <span class="sep">│</span>
-                            <span class="status-label">RECORDS:</span>
-                            <span class="status-val" id="totalRecords">0</span>
-                            <span class="sep">│</span>
-                            <span class="status-label">UPTIME:</span>
-                            <span class="status-val" id="uptime">00:00:00</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Waiting for telemetry&hellip;</p>
+    </div>
 
-            <div id="loading" class="loading">
-                <pre class="boot-seq">
-[    0.000000] gcc-ascend: initializing telemetry subsystem...
-[    0.001204] rockblck: scanning for iridium modem SBD messages
-[    0.002107] decoder:  payload parser loaded (50-byte frame)
-[    0.003891] gmail:    polling endpoint active
-[    0.004500] dashboard: waiting for first data packet...
-<span class="cursor-blink">█</span></pre>
-            </div>
+    <main id="dashboard" style="display:none;">
 
-            <div id="dashboard" style="display: none;">
-                <!-- Top Row: Map + Hex Dump -->
-                <div class="top-row">
-                    <div class="panel map-panel">
-                        <div class="panel-header">
-                            <span class="ph-icon">┌─</span> FLIGHT PATH // GPS TRACK <span class="ph-trail">─────────────────────────</span>
-                        </div>
-                        <div class="panel-content">
-                            <div id="map"></div>
-                        </div>
-                    </div>
-
-                    <div class="panel hex-panel">
-                        <div class="panel-header">
-                            <span class="ph-icon">┌─</span> PAYLOAD HEX DUMP // 50-BYTE FRAME <span class="ph-trail">──────────</span>
-                        </div>
-                        <div class="panel-content hex-panel-inner">
-                            <!-- Tab bar -->
-                            <div class="hex-tabs">
-                                <button class="hex-tab active" data-tab="latest">▸ LATEST</button>
-                                <button class="hex-tab" data-tab="history">▸ HISTORY</button>
-                            </div>
-
-                            <!-- ═══ LATEST TAB ═══ -->
-                            <div class="hex-tab-body" id="tabLatest">
-                                <div class="hex-section">
-                                    <div class="hex-label">RAW HEX <span class="hex-meta" id="latestHexMeta"></span></div>
-                                    <div class="hex-raw" id="rawHex">-- awaiting data --</div>
-                                </div>
-                                <div class="hex-section">
-                                    <div class="hex-label">BYTE ARRAY DECODE:</div>
-                                    <div class="hex-dump">
-                                        <pre class="hex-offset-header">OFFSET  00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F  ASCII</pre>
-                                        <div id="hexRows">-- no data --</div>
-                                    </div>
-                                </div>
-                                <div class="hex-section">
-                                    <div class="hex-label">BYTE MAP:</div>
-                                    <div class="byte-map" id="byteMap"></div>
-                                    <div class="byte-legend">
-                                        <span class="legend-item"><span class="legend-color hdr"></span>HDR</span>
-                                        <span class="legend-item"><span class="legend-color ser"></span>SER</span>
-                                        <span class="legend-item"><span class="legend-color utc"></span>UTC</span>
-                                        <span class="legend-item"><span class="legend-color gps"></span>GPS</span>
-                                        <span class="legend-item"><span class="legend-color alt"></span>ALT</span>
-                                        <span class="legend-item"><span class="legend-color adc"></span>ADC</span>
-                                        <span class="legend-item"><span class="legend-color rsv"></span>RSVD</span>
-                                        <span class="legend-item"><span class="legend-color mdm"></span>MDM</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- ═══ HISTORY TAB ═══ -->
-                            <div class="hex-tab-body" id="tabHistory" style="display:none;">
-                                <!-- Navigation -->
-                                <div class="history-nav">
-                                    <button class="hist-btn" id="histFirst" title="Oldest">|◀</button>
-                                    <button class="hist-btn" id="histPrev" title="Previous">◀</button>
-                                    <div class="hist-center">
-                                        <div class="hist-momsn-row">
-                                            <span class="hist-label">MOMSN</span>
-                                            <span class="hist-momsn" id="histMomsn">--</span>
-                                        </div>
-                                        <div class="hist-index" id="histIndex">[ 0 / 0 ]</div>
-                                    </div>
-                                    <button class="hist-btn" id="histNext" title="Next">▶</button>
-                                    <button class="hist-btn" id="histLast" title="Latest">▶|</button>
-                                </div>
-                                <!-- Record metadata -->
-                                <div class="hist-meta" id="histMeta"></div>
-                                <!-- Raw hex -->
-                                <div class="hex-section">
-                                    <div class="hex-label">RAW HEX:</div>
-                                    <div class="hex-raw" id="histRawHex">-- select a record --</div>
-                                </div>
-                                <!-- Byte dump -->
-                                <div class="hex-section">
-                                    <div class="hex-label">BYTE ARRAY DECODE:</div>
-                                    <div class="hex-dump">
-                                        <pre class="hex-offset-header">OFFSET  00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F  ASCII</pre>
-                                        <div id="histHexRows">-- no data --</div>
-                                    </div>
-                                </div>
-                                <!-- Byte map -->
-                                <div class="hex-section">
-                                    <div class="hex-label">BYTE MAP:</div>
-                                    <div class="byte-map" id="histByteMap"></div>
-                                    <div class="byte-legend">
-                                        <span class="legend-item"><span class="legend-color hdr"></span>HDR</span>
-                                        <span class="legend-item"><span class="legend-color ser"></span>SER</span>
-                                        <span class="legend-item"><span class="legend-color utc"></span>UTC</span>
-                                        <span class="legend-item"><span class="legend-color gps"></span>GPS</span>
-                                        <span class="legend-item"><span class="legend-color alt"></span>ALT</span>
-                                        <span class="legend-item"><span class="legend-color adc"></span>ADC</span>
-                                        <span class="legend-item"><span class="legend-color rsv"></span>RSVD</span>
-                                        <span class="legend-item"><span class="legend-color mdm"></span>MDM</span>
-                                    </div>
-                                </div>
-                                <!-- Diff vs previous -->
-                                <div class="hex-section">
-                                    <div class="hex-label">DIFF vs PREVIOUS FRAME:</div>
-                                    <div class="hex-diff" id="histDiff">-- need 2+ records --</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modem Status Row -->
-                <div class="mid-row">
-                    <div class="panel modem-panel">
-                        <div class="panel-header">
-                            <span class="ph-icon">┌─</span> MODEM STATUS <span class="ph-trail">──────────────────────────────────</span>
-                        </div>
-                        <div class="panel-content">
-                            <div class="modem-grid">
-                                <div class="modem-item">
-                                    <div class="modem-code" id="modemCode">---</div>
-                                    <div class="modem-desc" id="modemDesc">AWAITING</div>
-                                </div>
-                                <div class="modem-detail">
-                                    <div class="md-row"><span class="md-key">IMEI</span><span class="md-val" id="latestImei">--</span></div>
-                                    <div class="md-row"><span class="md-key">MOMSN</span><span class="md-val" id="currentMomsn">--</span></div>
-                                    <div class="md-row"><span class="md-key">TX TIME</span><span class="md-val" id="latestTime">--</span></div>
-                                    <div class="md-row"><span class="md-key">SESSION</span><span class="md-val" id="latestSessionStatus">--</span></div>
-                                </div>
-                                <div class="modem-detail">
-                                    <div class="md-row"><span class="md-key">GPS POS</span><span class="md-val" id="latestGps">--</span></div>
-                                    <div class="md-row"><span class="md-key">IRID POS</span><span class="md-val" id="latestIridiumGps">--</span></div>
-                                    <div class="md-row"><span class="md-key">IRID CEP</span><span class="md-val" id="latestCep">--</span></div>
-                                    <div class="md-row"><span class="md-key">HEADER</span><span class="md-val" id="latestHeader">--</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sensor Readout -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <span class="ph-icon">┌─</span> SENSOR READOUT // LATEST FRAME <span class="ph-trail">─────────────────</span>
-                    </div>
-                    <div class="panel-content">
-                        <div class="sensor-grid">
-                            <div class="sensor-item">
-                                <div class="sensor-label">ALT</div>
-                                <div class="sensor-value" id="currentAltitude">----</div>
-                                <div class="sensor-unit">ft</div>
-                                <div class="sensor-bar"><div class="sensor-fill alt-fill" id="altBar"></div></div>
-                            </div>
-                            <div class="sensor-item">
-                                <div class="sensor-label">INT.TEMP</div>
-                                <div class="sensor-value" id="currentInternalTemp">--.-</div>
-                                <div class="sensor-unit">°C</div>
-                                <div class="sensor-bar"><div class="sensor-fill temp-fill" id="intTempBar"></div></div>
-                            </div>
-                            <div class="sensor-item">
-                                <div class="sensor-label">EXT.TEMP</div>
-                                <div class="sensor-value" id="currentExternalTemp">--.-</div>
-                                <div class="sensor-unit">°C</div>
-                                <div class="sensor-bar"><div class="sensor-fill temp-fill" id="extTempBar"></div></div>
-                            </div>
-                            <div class="sensor-item">
-                                <div class="sensor-label">PRESSURE</div>
-                                <div class="sensor-value" id="currentPressure">--.--</div>
-                                <div class="sensor-unit">PSI</div>
-                                <div class="sensor-bar"><div class="sensor-fill psi-fill" id="psiBar"></div></div>
-                            </div>
-                            <div class="sensor-item">
-                                <div class="sensor-label">BATT</div>
-                                <div class="sensor-value" id="currentBattery">--.--</div>
-                                <div class="sensor-unit">V</div>
-                                <div class="sensor-bar"><div class="sensor-fill batt-fill" id="battBar"></div></div>
-                            </div>
-                            <div class="sensor-item">
-                                <div class="sensor-label">ACCEL.X</div>
-                                <div class="sensor-value" id="currentAccelX">--.--</div>
-                                <div class="sensor-unit">G</div>
-                                <div class="sensor-bar"><div class="sensor-fill acc-fill" id="accXBar"></div></div>
-                            </div>
-                            <div class="sensor-item">
-                                <div class="sensor-label">ACCEL.Y</div>
-                                <div class="sensor-value" id="currentAccelY">--.--</div>
-                                <div class="sensor-unit">G</div>
-                                <div class="sensor-bar"><div class="sensor-fill acc-fill" id="accYBar"></div></div>
-                            </div>
-                            <div class="sensor-item">
-                                <div class="sensor-label">UTC</div>
-                                <div class="sensor-value" id="currentUTC">--:--:--</div>
-                                <div class="sensor-unit">hms</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Charts -->
-                <div class="charts-row">
-                    <div class="panel chart-panel">
-                        <div class="panel-header"><span class="ph-icon">┌─</span> ALT vs TIME <span class="ph-trail">────────────────</span></div>
-                        <div class="panel-content"><div class="chart-container"><canvas id="altitudeChart"></canvas></div></div>
-                    </div>
-                    <div class="panel chart-panel">
-                        <div class="panel-header"><span class="ph-icon">┌─</span> TEMP vs TIME <span class="ph-trail">───────────────</span></div>
-                        <div class="panel-content"><div class="chart-container"><canvas id="temperatureChart"></canvas></div></div>
-                    </div>
-                    <div class="panel chart-panel">
-                        <div class="panel-header"><span class="ph-icon">┌─</span> BATT / PSI <span class="ph-trail">────────────────</span></div>
-                        <div class="panel-content"><div class="chart-container"><canvas id="batteryChart"></canvas></div></div>
-                    </div>
-                </div>
+        <!-- BT Datalink strip -->
+        <div class="datalink-strip" id="datalinkStrip">
+            <span class="datalink-label">BT DATALINK</span>
+            <span class="datalink-value" id="datalinkStatus">UNKNOWN</span>
+            <div class="datalink-right">
+                <span class="datalink-item">SWEEP <span class="datalink-val" id="radioSweep">--</span></span>
+                <span class="datalink-item">SIG <span class="datalink-val" id="radioPeakSig">--</span>/15</span>
             </div>
         </div>
 
-        <!-- Log Panel -->
-        <div class="log-panel">
-            <div class="log-header">
-                <div class="log-title">┌─ STDOUT // SYSTEM LOG ─────────────┐</div>
+        <!-- Map + Info sidebar -->
+        <div class="row row-top">
+            <section class="card map-card">
+                <h2>Flight Path</h2>
+                <div id="map"></div>
+            </section>
+            <div class="col sidebar">
+                <section class="card compact">
+                    <h2>Position <span class="gnss-badge off" id="gnssBadge">NO FIX</span></h2>
+                    <div class="kv"><span class="k">LAT</span><span class="v" id="gpsLat">--</span></div>
+                    <div class="kv"><span class="k">LON</span><span class="v" id="gpsLon">--</span></div>
+                    <div class="kv"><span class="k">ALT</span><span class="v"><span id="gpsAlt">--</span> <small id="altUnit">ft</small></span></div>
+                    <div class="kv"><span class="k">TIME</span><span class="v" id="gpsUtc">--:--:-- MST</span></div>
+                </section>
+                <section class="card compact">
+                    <h2>Modem</h2>
+                    <div class="kv"><span class="k">IMEI</span><span class="v sm" id="modemImei">--</span></div>
+                    <div class="kv"><span class="k">STATUS</span><span class="v" id="modemStatus">--</span></div>
+                    <div class="kv"><span class="k">PREV</span><span class="v" id="modemPrev">--</span></div>
+                    <div class="kv"><span class="k">HEADER</span><span class="v" id="headerInfo">--</span></div>
+                </section>
+                <section class="card compact">
+                    <h2>Radio Scanner</h2>
+                    <div class="kv"><span class="k">FREQ</span><span class="v" id="radioFreq">--</span></div>
+                    <div class="kv"><span class="k">SIGNAL</span><span class="v" id="radioSignal">--</span></div>
+                    <div class="kv"><span class="k">MODE</span><span class="v" id="radioMode">--</span></div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Sensor gauges -->
+        <section class="card">
+            <h2>Sensors</h2>
+            <div class="sensor-grid">
+                <div class="gauge">
+                    <div class="gauge-label">AHT20 Temp</div>
+                    <div class="gauge-value" id="ahtTemp">--</div>
+                    <div class="gauge-unit">°F</div>
+                    <div class="gauge-bar"><div class="gauge-fill temp" id="ahtTempBar"></div></div>
+                </div>
+                <div class="gauge">
+                    <div class="gauge-label">AHT20 Humidity</div>
+                    <div class="gauge-value" id="ahtHum">--</div>
+                    <div class="gauge-unit">% RH</div>
+                    <div class="gauge-bar"><div class="gauge-fill hum" id="ahtHumBar"></div></div>
+                </div>
+                <div class="gauge">
+                    <div class="gauge-label">Int. Temp</div>
+                    <div class="gauge-value" id="intTemp">--</div>
+                    <div class="gauge-unit">°F</div>
+                    <div class="gauge-bar"><div class="gauge-fill temp" id="intTempBar"></div></div>
+                </div>
+                <div class="gauge">
+                    <div class="gauge-label">Ext. Temp</div>
+                    <div class="gauge-value" id="extTemp">--</div>
+                    <div class="gauge-unit">°F</div>
+                    <div class="gauge-bar"><div class="gauge-fill temp" id="extTempBar"></div></div>
+                </div>
+                <div class="gauge">
+                    <div class="gauge-label">Master Batt</div>
+                    <div class="gauge-value" id="masterBatt">--</div>
+                    <div class="gauge-unit">V</div>
+                    <div class="gauge-bar"><div class="gauge-fill batt" id="masterBattBar"></div></div>
+                </div>
+                <div class="gauge">
+                    <div class="gauge-label">Slave Batt</div>
+                    <div class="gauge-value" id="slaveBatt">--</div>
+                    <div class="gauge-unit">V</div>
+                    <div class="gauge-bar"><div class="gauge-fill batt" id="slaveBattBar"></div></div>
+                </div>
+                <div class="gauge">
+                    <div class="gauge-label">Altitude</div>
+                    <div class="gauge-value" id="altGauge">--</div>
+                    <div class="gauge-unit" id="altGaugeUnit">ft</div>
+                    <div class="gauge-bar"><div class="gauge-fill alt" id="altBar"></div></div>
+                </div>
+                <div class="gauge">
+                    <div class="gauge-label">AHT20 Status</div>
+                    <div class="gauge-value" id="ahtStatus">--</div>
+                    <div class="gauge-unit">&nbsp;</div>
+                    <div class="gauge-bar"><div class="gauge-fill aht" id="ahtStatusBar"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts -->
+        <div class="row charts-row">
+            <section class="card chart-card">
+                <h2>Altitude</h2>
+                <div class="chart-wrap"><canvas id="altChart"></canvas></div>
+            </section>
+            <section class="card chart-card">
+                <h2>Temperature</h2>
+                <div class="chart-wrap"><canvas id="tempChart"></canvas></div>
+            </section>
+            <section class="card chart-card">
+                <h2>Battery &amp; Humidity</h2>
+                <div class="chart-wrap"><canvas id="battChart"></canvas></div>
+            </section>
+        </div>
+
+        <!-- Hex dump -->
+        <section class="card">
+            <h2>Raw Hex <small id="hexMeta"></small></h2>
+            <div class="hex-legend">
+                <span class="hl hl-hdr">HDR</span>
+                <span class="hl hl-ser">SER</span>
+                <span class="hl hl-status">DATALINK</span>
+                <span class="hl hl-gnss">GNSS</span>
+                <span class="hl hl-i2c">I2C</span>
+                <span class="hl hl-rsv">RSVD</span>
+                <span class="hl hl-analog">ANALOG</span>
+                <span class="hl hl-modem">MODEM</span>
+            </div>
+            <div class="hex-bytes" id="hexBytes"></div>
+        </section>
+
+        <!-- Log panel -->
+        <section class="card log-card">
+            <div class="log-header-row">
+                <h2>System Log</h2>
                 <div class="log-controls">
                     <button class="log-filter active" data-level="ALL">ALL</button>
                     <button class="log-filter" data-level="DEBUG">DBG</button>
@@ -277,21 +166,22 @@
                     <button class="log-filter" data-level="WARNING">WRN</button>
                     <button class="log-filter" data-level="ERROR">ERR</button>
                 </div>
+                <div class="log-stats">
+                    <span>lines: <span id="logTotal">0</span></span>
+                    <span>shown: <span id="logFiltered">0</span></span>
+                    <span class="log-auto-scroll" id="autoScrollIndicator">AUTO-SCROLL ●</span>
+                </div>
             </div>
             <div class="log-content" id="logContent">
                 <div class="log-entry INFO">
-                    <span class="log-timestamp">--:--:--</span>
-                    <span class="log-level INFO">[INF]</span>
-                    <span class="log-message">waiting for log stream...</span>
+                    <span class="log-ts">--:--:--</span>
+                    <span class="log-lvl INFO">[INF]</span>
+                    <span class="log-msg">waiting for log stream...</span>
                 </div>
             </div>
-            <div class="log-stats">
-                <span>lines: <span id="logTotal">0</span></span>
-                <span>shown: <span id="logFiltered">0</span></span>
-                <span class="log-auto-scroll" id="autoScrollIndicator">AUTO-SCROLL ●</span>
-            </div>
-        </div>
-    </div>
+        </section>
+
+    </main>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>

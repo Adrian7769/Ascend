@@ -1,75 +1,694 @@
 {
-  "lastUpdated": 1771158519,
+  "lastUpdated": 1773809891,
   "telemetry": [
     {
-      "hexData": "52420033f512183b202f2e006f16330100000228000000000000000000000000000000000000000000000000000000000000",
+      "hexData": "524203561101160f1221272500700b110100036152ca570354cc076dc40200a30201010000000008c3113713220c400d0d00",
       "imei": "300534065390120",
-      "iridiumCep": 4.0,
-      "iridiumLatitude": 32.788,
-      "iridiumLongitude": -111.3412,
+      "iridiumCep": 8.0,
+      "iridiumLatitude": 33.694,
+      "iridiumLongitude": -112.1782,
       "isValid": true,
-      "momsn": 39,
+      "momsn": 81,
       "payload": {
-        "altitude": 552,
-        "altitudeUnits": "meters",
+        "aht20": {
+          "humidityRH": 20.820236206054688,
+          "isValid": true,
+          "status": 2,
+          "statusString": "OK",
+          "tempC": 42.859649658203125,
+          "tempF": 109.14736938476563
+        },
+        "altitude": 221522,
+        "altitudeUnits": "feet",
+        "flightStatus": {
+          "ascent": false,
+          "balloonBurst": false,
+          "btRxFailure": false,
+          "btRxSuccess": true,
+          "descent": false,
+          "landing": false,
+          "phase": "PRE-LAUNCH",
+          "raw": 1
+        },
+        "gnssValid": false,
         "header": "RB",
         "headerValid": true,
-        "latitude": 32.79611111111111,
-        "longitude": -111.38083333333333,
-        "modemStatus": 0,
-        "modemStatusDescription": "Unknown: 0",
+        "latitude": 33.66027777777778,
+        "longitude": -112.18805555555556,
+        "modem": {
+          "currentCode": 13,
+          "currentDesc": "Code 13",
+          "previousCode": 13,
+          "previousDesc": "Code 13",
+          "txSuccessCount": 0
+        },
+        "radio": {
+          "frequencyMHz": 105.5,
+          "signalStrength": 2,
+          "stationIndex": 163,
+          "stereo": true
+        },
+        "recordSequence": 87,
         "sensors": {
-          "accelX": {
-            "isValid": true,
-            "measurement": -7.370535373687744,
-            "name": "X-axis Accelerometer",
-            "unit": "G",
-            "voltage": 0.0
-          },
-          "accelY": {
-            "isValid": true,
-            "measurement": -7.370535373687744,
-            "name": "Y-axis Accelerometer",
-            "unit": "G",
-            "voltage": 0.0
-          },
-          "battery": {
-            "isValid": true,
-            "measurement": 0.0,
-            "name": "Battery",
-            "unit": "V",
-            "voltage": 0.0
-          },
           "externalTemp": {
             "isValid": true,
-            "measurement": -44.6363639831543,
+            "measurement": 32.890071868896484,
             "name": "External Temperature",
-            "unit": "°C (-48°F)",
-            "voltage": 0.0
+            "unit": "°C (91°F)",
+            "voltage": 0.8527907729148865
           },
           "internalTemp": {
             "isValid": true,
-            "measurement": -45.63636016845703,
+            "measurement": 24.11843490600586,
             "name": "Internal Temperature",
-            "unit": "°C (-50°F)",
-            "voltage": 0.0
+            "unit": "°C (75°F)",
+            "voltage": 0.7673027515411377
           },
-          "pressure": {
+          "masterBattery": {
             "isValid": true,
-            "measurement": -3.8951311111450195,
-            "name": "Pressure",
-            "unit": "PSI",
-            "voltage": 0.0
+            "measurement": 7.438167095184326,
+            "name": "Master Battery",
+            "unit": "V",
+            "voltage": 7.2224602699279785
+          },
+          "slaveBattery": {
+            "isValid": true,
+            "measurement": 0.5727633833885193,
+            "name": "Slave Battery",
+            "unit": "V",
+            "voltage": 0.5460089445114136
           }
         },
-        "serialNumber": 13301,
-        "utcHours": 18,
-        "utcMinutes": 24,
-        "utcSeconds": 59
+        "serialNumber": 218641,
+        "utcHours": 22,
+        "utcMinutes": 15,
+        "utcSeconds": 18
       },
       "sessionStatus": 0,
-      "transmitTime": "2025-03-29T18:25:13Z"
+      "transmitTime": "2026-03-17T22:15:53Z"
+    },
+    {
+      "hexData": "52420356110116142421272500700b110100036357caa60298b60769980200760300010000000008c2127313080c20920d01",
+      "imei": "300534065390120",
+      "iridiumCep": 6.0,
+      "iridiumLatitude": 33.6564,
+      "iridiumLongitude": -112.2181,
+      "isValid": true,
+      "momsn": 82,
+      "payload": {
+        "aht20": {
+          "humidityRH": 16.228294372558594,
+          "isValid": true,
+          "status": 2,
+          "statusString": "OK",
+          "tempC": 42.65594482421875,
+          "tempF": 108.78070068359375
+        },
+        "altitude": 222039,
+        "altitudeUnits": "feet",
+        "flightStatus": {
+          "ascent": false,
+          "balloonBurst": false,
+          "btRxFailure": false,
+          "btRxSuccess": true,
+          "descent": false,
+          "landing": false,
+          "phase": "PRE-LAUNCH",
+          "raw": 1
+        },
+        "gnssValid": false,
+        "header": "RB",
+        "headerValid": true,
+        "latitude": 33.66027777777778,
+        "longitude": -112.18805555555556,
+        "modem": {
+          "currentCode": 146,
+          "currentDesc": "Transmit Successful, No Receive",
+          "previousCode": 13,
+          "previousDesc": "Code 13",
+          "txSuccessCount": 1
+        },
+        "radio": {
+          "frequencyMHz": 101.0,
+          "signalStrength": 3,
+          "stationIndex": 118,
+          "stereo": false
+        },
+        "recordSequence": 166,
+        "sensors": {
+          "externalTemp": {
+            "isValid": true,
+            "measurement": 32.478538513183594,
+            "name": "External Temperature",
+            "unit": "°C (90°F)",
+            "voltage": 0.8482639193534851
+          },
+          "internalTemp": {
+            "isValid": true,
+            "measurement": 29.120141983032227,
+            "name": "Internal Temperature",
+            "unit": "°C (84°F)",
+            "voltage": 0.8223215341567993
+          },
+          "masterBattery": {
+            "isValid": true,
+            "measurement": 7.434850692749023,
+            "name": "Master Battery",
+            "unit": "V",
+            "voltage": 7.219240188598633
+          },
+          "slaveBattery": {
+            "isValid": true,
+            "measurement": 0.5669189095497131,
+            "name": "Slave Battery",
+            "unit": "V",
+            "voltage": 0.5404374599456787
+          }
+        },
+        "serialNumber": 218641,
+        "utcHours": 22,
+        "utcMinutes": 20,
+        "utcSeconds": 36
+      },
+      "sessionStatus": 0,
+      "transmitTime": "2026-03-17T22:21:12Z"
+    },
+    {
+      "hexData": "524203561101161a0c21272500700b11010000017e00f602e7ff07689c02004a0301010000000008a5133613240c20929202",
+      "imei": "300534065390120",
+      "iridiumCep": 3.0,
+      "iridiumLatitude": 33.6755,
+      "iridiumLongitude": -112.1619,
+      "isValid": true,
+      "momsn": 83,
+      "payload": {
+        "aht20": {
+          "humidityRH": 18.16396713256836,
+          "isValid": true,
+          "status": 2,
+          "statusString": "OK",
+          "tempC": 42.607879638671875,
+          "tempF": 108.69418334960938
+        },
+        "altitude": 382,
+        "altitudeUnits": "meters",
+        "flightStatus": {
+          "ascent": false,
+          "balloonBurst": false,
+          "btRxFailure": false,
+          "btRxSuccess": true,
+          "descent": false,
+          "landing": false,
+          "phase": "PRE-LAUNCH",
+          "raw": 1
+        },
+        "gnssValid": true,
+        "header": "RB",
+        "headerValid": true,
+        "latitude": 33.66027777777778,
+        "longitude": -112.18805555555556,
+        "modem": {
+          "currentCode": 146,
+          "currentDesc": "Transmit Successful, No Receive",
+          "previousCode": 146,
+          "previousDesc": "Transmit Successful, No Receive",
+          "txSuccessCount": 2
+        },
+        "radio": {
+          "frequencyMHz": 96.5999984741211,
+          "signalStrength": 3,
+          "stationIndex": 74,
+          "stereo": true
+        },
+        "recordSequence": 246,
+        "sensors": {
+          "externalTemp": {
+            "isValid": true,
+            "measurement": 32.92172622680664,
+            "name": "External Temperature",
+            "unit": "°C (91°F)",
+            "voltage": 0.8531389832496643
+          },
+          "internalTemp": {
+            "isValid": true,
+            "measurement": 32.20663833618164,
+            "name": "Internal Temperature",
+            "unit": "°C (89°F)",
+            "voltage": 0.8562729954719543
+          },
+          "masterBattery": {
+            "isValid": true,
+            "measurement": 7.338681697845459,
+            "name": "Master Battery",
+            "unit": "V",
+            "voltage": 7.125860214233398
+          },
+          "slaveBattery": {
+            "isValid": true,
+            "measurement": 0.5669189095497131,
+            "name": "Slave Battery",
+            "unit": "V",
+            "voltage": 0.5404374599456787
+          }
+        },
+        "serialNumber": 218641,
+        "utcHours": 22,
+        "utcMinutes": 26,
+        "utcSeconds": 12
+      },
+      "sessionStatus": 0,
+      "transmitTime": "2026-03-17T22:26:37Z"
+    },
+    {
+      "hexData": "52420356110116220121272500700b1101000368acca6d02fe23076a09020064010001000000000898141f134e0ba00d0d03",
+      "imei": "300534065390120",
+      "iridiumCep": 4.0,
+      "iridiumLatitude": 33.6454,
+      "iridiumLongitude": -112.1619,
+      "isValid": true,
+      "momsn": 84,
+      "payload": {
+        "aht20": {
+          "humidityRH": 18.704509735107422,
+          "isValid": true,
+          "status": 2,
+          "statusString": "OK",
+          "tempC": 42.67749786376953,
+          "tempF": 108.81949615478516
+        },
+        "altitude": 223404,
+        "altitudeUnits": "feet",
+        "flightStatus": {
+          "ascent": false,
+          "balloonBurst": false,
+          "btRxFailure": false,
+          "btRxSuccess": true,
+          "descent": false,
+          "landing": false,
+          "phase": "PRE-LAUNCH",
+          "raw": 1
+        },
+        "gnssValid": false,
+        "header": "RB",
+        "headerValid": true,
+        "latitude": 33.66027777777778,
+        "longitude": -112.18805555555556,
+        "modem": {
+          "currentCode": 13,
+          "currentDesc": "Code 13",
+          "previousCode": 13,
+          "previousDesc": "Code 13",
+          "txSuccessCount": 3
+        },
+        "radio": {
+          "frequencyMHz": 99.19999694824219,
+          "signalStrength": 1,
+          "stationIndex": 100,
+          "stereo": false
+        },
+        "recordSequence": 109,
+        "sensors": {
+          "externalTemp": {
+            "isValid": true,
+            "measurement": 33.58651351928711,
+            "name": "External Temperature",
+            "unit": "°C (92°F)",
+            "voltage": 0.8604516386985779
+          },
+          "internalTemp": {
+            "isValid": true,
+            "measurement": 35.89460372924805,
+            "name": "Internal Temperature",
+            "unit": "°C (96°F)",
+            "voltage": 0.8968406319618225
+          },
+          "masterBattery": {
+            "isValid": true,
+            "measurement": 7.295571804046631,
+            "name": "Master Battery",
+            "unit": "V",
+            "voltage": 7.084000110626221
+          },
+          "slaveBattery": {
+            "isValid": true,
+            "measurement": 0.5435407757759094,
+            "name": "Slave Battery",
+            "unit": "V",
+            "voltage": 0.5181513428688049
+          }
+        },
+        "serialNumber": 218641,
+        "utcHours": 22,
+        "utcMinutes": 34,
+        "utcSeconds": 1
+      },
+      "sessionStatus": 0,
+      "transmitTime": "2026-03-17T22:34:43Z"
+    },
+    {
+      "hexData": "524203561101162b0b21272500700b11010000018300f80379e0074b9d02009e01000100000000086e14a212e50c000d0d04",
+      "imei": "300534065390120",
+      "iridiumCep": 4.0,
+      "iridiumLatitude": 33.694,
+      "iridiumLongitude": -112.1782,
+      "isValid": true,
+      "momsn": 85,
+      "payload": {
+        "aht20": {
+          "humidityRH": 21.7254638671875,
+          "isValid": true,
+          "status": 2,
+          "statusString": "OK",
+          "tempC": 41.192054748535156,
+          "tempF": 106.14569854736328
+        },
+        "altitude": 387,
+        "altitudeUnits": "meters",
+        "flightStatus": {
+          "ascent": false,
+          "balloonBurst": false,
+          "btRxFailure": false,
+          "btRxSuccess": true,
+          "descent": false,
+          "landing": false,
+          "phase": "PRE-LAUNCH",
+          "raw": 1
+        },
+        "gnssValid": true,
+        "header": "RB",
+        "headerValid": true,
+        "latitude": 33.66027777777778,
+        "longitude": -112.18805555555556,
+        "modem": {
+          "currentCode": 13,
+          "currentDesc": "Code 13",
+          "previousCode": 13,
+          "previousDesc": "Code 13",
+          "txSuccessCount": 4
+        },
+        "radio": {
+          "frequencyMHz": 105.0,
+          "signalStrength": 1,
+          "stationIndex": 158,
+          "stereo": false
+        },
+        "recordSequence": 248,
+        "sensors": {
+          "externalTemp": {
+            "isValid": true,
+            "measurement": 31.924551010131836,
+            "name": "External Temperature",
+            "unit": "°C (89°F)",
+            "voltage": 0.8421700596809387
+          },
+          "internalTemp": {
+            "isValid": true,
+            "measurement": 37.96809387207031,
+            "name": "Internal Temperature",
+            "unit": "°C (100°F)",
+            "voltage": 0.9196490049362183
+          },
+          "masterBattery": {
+            "isValid": true,
+            "measurement": 7.15629243850708,
+            "name": "Master Battery",
+            "unit": "V",
+            "voltage": 6.948760032653809
+          },
+          "slaveBattery": {
+            "isValid": true,
+            "measurement": 0.5610743761062622,
+            "name": "Slave Battery",
+            "unit": "V",
+            "voltage": 0.5348659157752991
+          }
+        },
+        "serialNumber": 218641,
+        "utcHours": 22,
+        "utcMinutes": 43,
+        "utcSeconds": 11
+      },
+      "sessionStatus": 0,
+      "transmitTime": "2026-03-17T22:43:56Z"
+    },
+    {
+      "hexData": "52420356110116340a21272500700b110100036fbeca840287620751d802001c02000100000000085114a5132e0c000df005",
+      "imei": "300534065390120",
+      "iridiumCep": 4.0,
+      "iridiumLatitude": 33.6755,
+      "iridiumLongitude": -112.1619,
+      "isValid": true,
+      "momsn": 86,
+      "payload": {
+        "aht20": {
+          "humidityRH": 15.805244445800781,
+          "isValid": true,
+          "status": 2,
+          "statusString": "OK",
+          "tempC": 41.49627685546875,
+          "tempF": 106.69329833984375
+        },
+        "altitude": 225214,
+        "altitudeUnits": "feet",
+        "flightStatus": {
+          "ascent": false,
+          "balloonBurst": false,
+          "btRxFailure": false,
+          "btRxSuccess": true,
+          "descent": false,
+          "landing": false,
+          "phase": "PRE-LAUNCH",
+          "raw": 1
+        },
+        "gnssValid": false,
+        "header": "RB",
+        "headerValid": true,
+        "latitude": 33.66027777777778,
+        "longitude": -112.18805555555556,
+        "modem": {
+          "currentCode": 13,
+          "currentDesc": "Code 13",
+          "previousCode": 240,
+          "previousDesc": "Code 240",
+          "txSuccessCount": 5
+        },
+        "radio": {
+          "frequencyMHz": 92.0,
+          "signalStrength": 2,
+          "stationIndex": 28,
+          "stereo": false
+        },
+        "recordSequence": 132,
+        "sensors": {
+          "externalTemp": {
+            "isValid": true,
+            "measurement": 33.08000946044922,
+            "name": "External Temperature",
+            "unit": "°C (91°F)",
+            "voltage": 0.8548800945281982
+          },
+          "internalTemp": {
+            "isValid": true,
+            "measurement": 38.01557540893555,
+            "name": "Internal Temperature",
+            "unit": "°C (100°F)",
+            "voltage": 0.920171320438385
+          },
+          "masterBattery": {
+            "isValid": true,
+            "measurement": 7.060123443603516,
+            "name": "Master Battery",
+            "unit": "V",
+            "voltage": 6.855380058288574
+          },
+          "slaveBattery": {
+            "isValid": true,
+            "measurement": 0.5610743761062622,
+            "name": "Slave Battery",
+            "unit": "V",
+            "voltage": 0.5348659157752991
+          }
+        },
+        "serialNumber": 218641,
+        "utcHours": 22,
+        "utcMinutes": 52,
+        "utcSeconds": 10
+      },
+      "sessionStatus": 0,
+      "transmitTime": "2026-03-17T22:53:03Z"
+    },
+    {
+      "hexData": "52420356110216383221272500700b110100037176ca140368890760af020062020002000000000830151c12d30bf00d0d06",
+      "imei": "300534065390120",
+      "iridiumCep": 3.0,
+      "iridiumLatitude": 33.6755,
+      "iridiumLongitude": -112.1619,
+      "isValid": true,
+      "momsn": 87,
+      "payload": {
+        "aht20": {
+          "humidityRH": 21.302127838134766,
+          "isValid": true,
+          "status": 2,
+          "statusString": "OK",
+          "tempC": 42.22087860107422,
+          "tempF": 107.9975814819336
+        },
+        "altitude": 225654,
+        "altitudeUnits": "feet",
+        "flightStatus": {
+          "ascent": false,
+          "balloonBurst": false,
+          "btRxFailure": true,
+          "btRxSuccess": false,
+          "descent": false,
+          "landing": false,
+          "phase": "PRE-LAUNCH",
+          "raw": 2
+        },
+        "gnssValid": false,
+        "header": "RB",
+        "headerValid": true,
+        "latitude": 33.66027777777778,
+        "longitude": -112.18805555555556,
+        "modem": {
+          "currentCode": 13,
+          "currentDesc": "Code 13",
+          "previousCode": 13,
+          "previousDesc": "Code 13",
+          "txSuccessCount": 6
+        },
+        "radio": {
+          "frequencyMHz": 99.0,
+          "signalStrength": 2,
+          "stationIndex": 98,
+          "stereo": false
+        },
+        "recordSequence": 20,
+        "sensors": {
+          "externalTemp": {
+            "isValid": true,
+            "measurement": 31.639646530151367,
+            "name": "External Temperature",
+            "unit": "°C (88°F)",
+            "voltage": 0.8390361070632935
+          },
+          "internalTemp": {
+            "isValid": true,
+            "measurement": 39.899131774902344,
+            "name": "Internal Temperature",
+            "unit": "°C (103°F)",
+            "voltage": 0.9408904314041138
+          },
+          "masterBattery": {
+            "isValid": true,
+            "measurement": 6.950690269470215,
+            "name": "Master Battery",
+            "unit": "V",
+            "voltage": 6.749120235443115
+          },
+          "slaveBattery": {
+            "isValid": true,
+            "measurement": 0.5581521391868591,
+            "name": "Slave Battery",
+            "unit": "V",
+            "voltage": 0.5320801734924316
+          }
+        },
+        "serialNumber": 218641,
+        "utcHours": 22,
+        "utcMinutes": 56,
+        "utcSeconds": 50
+      },
+      "sessionStatus": 0,
+      "transmitTime": "2026-03-17T23:02:46Z"
+    },
+    {
+      "hexData": "524203561101170d1221272500700b11010003879acac502a876075630020015030001000000000828142212a90c00200d07",
+      "imei": "300534065390120",
+      "iridiumCep": 3.0,
+      "iridiumLatitude": 33.6454,
+      "iridiumLongitude": -112.1619,
+      "isValid": true,
+      "momsn": 88,
+      "payload": {
+        "aht20": {
+          "humidityRH": 16.612815856933594,
+          "isValid": true,
+          "status": 2,
+          "statusString": "OK",
+          "tempC": 41.7083740234375,
+          "tempF": 107.0750732421875
+        },
+        "altitude": 231322,
+        "altitudeUnits": "feet",
+        "flightStatus": {
+          "ascent": false,
+          "balloonBurst": false,
+          "btRxFailure": false,
+          "btRxSuccess": true,
+          "descent": false,
+          "landing": false,
+          "phase": "PRE-LAUNCH",
+          "raw": 1
+        },
+        "gnssValid": false,
+        "header": "RB",
+        "headerValid": true,
+        "latitude": 33.66027777777778,
+        "longitude": -112.18805555555556,
+        "modem": {
+          "currentCode": 32,
+          "currentDesc": "Code 32",
+          "previousCode": 13,
+          "previousDesc": "Code 13",
+          "txSuccessCount": 7
+        },
+        "radio": {
+          "frequencyMHz": 91.29999542236328,
+          "signalStrength": 3,
+          "stationIndex": 21,
+          "stereo": false
+        },
+        "recordSequence": 197,
+        "sensors": {
+          "externalTemp": {
+            "isValid": true,
+            "measurement": 30.9748592376709,
+            "name": "External Temperature",
+            "unit": "°C (87°F)",
+            "voltage": 0.8317234516143799
+          },
+          "internalTemp": {
+            "isValid": true,
+            "measurement": 35.94208908081055,
+            "name": "Internal Temperature",
+            "unit": "°C (96°F)",
+            "voltage": 0.8973629474639893
+          },
+          "masterBattery": {
+            "isValid": true,
+            "measurement": 6.924160480499268,
+            "name": "Master Battery",
+            "unit": "V",
+            "voltage": 6.723360061645508
+          },
+          "slaveBattery": {
+            "isValid": true,
+            "measurement": 0.5610743761062622,
+            "name": "Slave Battery",
+            "unit": "V",
+            "voltage": 0.5348659157752991
+          }
+        },
+        "serialNumber": 218641,
+        "utcHours": 23,
+        "utcMinutes": 13,
+        "utcSeconds": 18
+      },
+      "sessionStatus": 0,
+      "transmitTime": "2026-03-17T23:14:10Z"
     }
   ],
-  "totalRecords": 1
+  "totalRecords": 8
 }
